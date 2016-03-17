@@ -1,0 +1,11 @@
+.idea
+*.pyc
+local_settings.py
+media/*
+app/angular/common/
+app/node_modules/
+*.log
+server/db.sqlite3
+server/media/
+server/user_auth/migrations/
+server/knacks/migrations

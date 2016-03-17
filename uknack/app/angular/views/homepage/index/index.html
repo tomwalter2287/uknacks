@@ -1,0 +1,321 @@
+<div class="page-header bg-image larger" style="background-image: url(images/headers/header1.jpg)">
+    <div class="overlay"></div><!-- End overlay -->
+    <div class="side-overlay" ng-show="isMenubarOpen" ng-click="hideMenubar()">
+        <img src="images/close-icon.png" />
+    </div><!-- End overlay -->
+    <div class="header-box">
+        <h1>Do Business With Your Classmates</h1>
+        <p>And keep 100% of what you make!</p>
+        <a href="javascript:void(0);" class="btn btn-custom7 btn-lger wow shake desktop-show" ng-click="getStart()">START DOING BUSINESS</a>
+
+        <div class="mobile-show header-btn-wrapper">
+            <a href="javascript:void(0);" class="btn btn-custom7 btn-lger wow shake" ng-click="getStart()">Become a Member</a>
+
+            <a href="javascript:void(0);" class="btn btn-custom btn-custom11 btn-lger wow shake" ng-click="openLoginModal()">Login to Uknack</a>
+        </div>
+    </div><!-- End .header-box -->
+</div><!-- End .page-top -->
+<div class="logo-section">
+    <div class="container">
+        <div class="row logo-container">
+            <a href="#" title="Harvard University">
+                <img src="images/logos/harvard.png" alt="Harvard" class="margin-1">
+            </a>
+            <a href="#" title="Notheastern University">
+                <img src="images/logos/north.png" alt="Notheastern" class="margin-2">
+            </a>
+            <a href="#" title="Suffolk University">
+                <img src="images/logos/suffolk.png" alt="Suffolk" class="margin-3">
+            </a>
+            <a href="#" title="Mit">
+                <img src="images/logos/mit.png" alt="Mit" class="margin-4">
+            </a>
+            <a href="#" title="Emerson College">
+                <img src="images/logos/emerson.png" alt="Emerson" class="margin-5">
+            </a>
+            <a href="#" title="Boston University">
+                <img src="images/logos/boston.png" alt="Boston" class="margin-6">
+            </a>
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+</div><!-- End .logo-section -->
+
+<div class="steps-section">
+    <div class="center-container">
+        <p class="lead full text-center">Uknack lets you do business with your friends and classmates and keep 100% of the money you make!</p>
+
+        <div class="steps-container">
+            <h3 class="text-center">IN 3 EASY STEPS</h3>
+            <div class="step-row">
+                <div class="step-content">
+                    <h2>1. Post things you’re good at</h2>
+                    <blockquote>
+                        <p>I’ll make you an awesome mobile app!</p>
+                        <cite>Peter Shaw<span>Boston University</span></cite>
+                    </blockquote>
+                </div><!-- End .step-content -->
+                <figure class="step-image">
+                    <img src="images/homepage/item1.png" class="wow zoomIn" alt="Step image">
+                </figure>
+            </div><!-- End .step-row -->
+            <div class="step-row">
+                <figure class="step-image">
+                    <img src="images/homepage/item2.png" class="wow zoomIn" alt="Step image">
+                </figure>
+                <div class="step-content">
+                    <h2>2. Get hired by classmates</h2>
+                    <blockquote>
+                        <p>Hey Pete! I need new app for my store. When can you start?</p>
+                        <cite>Angela  Ritter<span>Emerson College</span></cite>
+                    </blockquote>
+                </div><!-- End .step-content -->
+            </div><!-- End .step-row -->
+            <div class="step-row">
+                <div class="step-content">
+                    <h2>3. Get paid instantly</h2>
+                    <blockquote>
+                        <p>Thanks Angela, got your Venmo. Pleasure doing business with you. </p>
+                        <cite>Peter Shaw<span>Boston University</span></cite>
+                    </blockquote>
+                </div><!-- End .step-content -->
+                <figure class="step-image">
+                    <img src="images/homepage/item3.png" class="wow zoomIn" alt="Step image">
+                </figure>
+            </div><!-- End .step-row -->
+        </div><!-- End .steps-container -->
+    </div><!-- End .center-container -->
+
+    <div class="container">
+        <div class="steps-action">
+            <h3>No Fees. No Strings. No Bulls#it</h3>
+            <p>Just do what you’re good at and keep 100% of your hard earned money when you do it. It’s that simple!</p>
+            <a href="javascript:void(0);" class="btn btn-custom7 btn-lger wow shake" ng-click="getStart()">GET  STARTED IT’S FREE</a>
+        </div><!-- End .step-action -->
+    </div><!-- end .container -->
+</div><!-- End .steps-section -->
+
+<div class="knacks-section knacks-section-cus index-knacks-section">
+    <div class="container">
+        <h2 class="title">Unique items and services from classmates near you</h2>
+        <div class="row">
+            <div id="item-container" class="flip-wrapper">
+                <div class="item-wrapper flip-container col-md-4 col-lg-3 col-sm-6 col-xs-12" ng-repeat="item in knacks track by $index">
+                    <div class="flipper">
+                        <article class="item front" ng-class="{'flip-action-front': item.flip}">
+                            <div class="item-header">
+                                <ul photo-slider data-gallery="false">
+                                    <li ng-repeat="photo in item.thumb_photo track by $index" data-thumb="{{photo}}">
+                                        <a href="" title="{{item.name}}" class="item-photo ">
+                                            <img alt="{{ item.name }}" ng-src="{{ photo }}" />
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--
+                                <a href="" title="{{item.name}}" class="item-photo ">
+                                    <img ng-src="{{item.thumb_photo[0]}}" alt="{{item.name}}">
+                                </a>
+                                -->
+                                <span class="item-price">${{item.price}}/hr</span>
+                                <div class="item-fav">
+                                    <a class="icon-flip" title="Flip" ng-click="flip(item)">Flip</a>
+                                </div>
+                                <div class="gradient-layout"></div>
+                            </div>
+                            <div class="item-content">
+                                <h2 class="item-title">
+                                    <a ui-sref="knack-offered-single({id:item.id})" href="">{{item.name}}</a>
+                                </h2>
+                                <p class="item-desc">{{item.description}}</p>
+                                <div class="item-meta" ng-show="item.type=='knack'">
+                                    <div class="line-separator"></div>
+                                    <div class="ratings-container sm">
+                                        <div class="ratings-wrapper">
+                                            <div class="ratings" ng-style="{'width': (item.rate * 100 / 5) + '%'}"></div>
+                                        </div>
+                                        <span class="ratings-count">({{item.rate}})</span>
+                                    </div>
+                                    <span class="dot-separator"></span>
+                                    <div class="item-category">
+                                        <a href="" title="Udelivery">{{item.category_name}}</a>
+                                    </div>
+                                </div>
+                                <div class="item-action" ng-show="item.type=='ideas' || show_mode=='ideas'">
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-custom btn-block" ng-click="openPostModal('offer', 'make_mine', item)">
+                                        <strong>MAKE IT MINE</strong>
+                                        <i class="icon-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="item back item-profile " ng-class="{'flip-action-back': item.flip}">
+                            <div class="item-header text-center">
+                                <figure class="item-avatar" ng-click="showVideoModal(item.profile.video_url)">
+                                    <img ng-src="{{item.profile.avatar}}" alt="{{item.profile.name}}">
+                                    <span class="owner-status on"></span>
+                                    <a href="" class="play-video"></a>
+                                </figure>
+                                <a class="profile-name">{{item.profile.name}}</a>
+                                <div class="profile-item">{{item.profile.college}}</div>
+                                <div class="profile-item">
+                                    {{item.profile.skill}} &middot; {{item.profile.age}} y/o
+                                </div>
+                                <a class="icon-check"></a>
+                                <a class="icon-flip" ng-click="flip(item)"></a>
+                            </div>
+                            <div class="item-content">
+                                <div class="form-group">
+                                    <p class="item-price">${{item.profile.cost}}</p>
+                                    <p class="profile-item">{{item.profile.created}}</p>
+                                </div>
+                                <div class="form-group">
+                                    <div class="rating">
+                                        <div class="ratings-container sm">
+                                                    <span class="ratings-wrapper">
+                                                        <span class="ratings" ng-style="{'width':(item.profile.rate * 100 / 5) + '%'}"></span>
+                                                    </span>
+                                            <span class="ratings-count">({{item.profile.rate}})</span>
+                                        </div>
+                                    </div>
+                                    <p class="profile-item">Last seen: {{item.last_seen}}</p>
+                                </div>
+                                <div class="form-group">
+                                    <ul class="connection-list">
+                                        <li ng-repeat="figure in item.profile.connections">
+                                            <figure><img ng-src="{{figure}}"></figure>
+                                        </li>
+                                        <li><span class="more-connections">+{{item.profile.conn_more_count}}</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div><!-- End #item-container  -->
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="btn-more-container text-center btn-more-container-cus">
+            <a href="#" class="btn btn-custom8 btn-more btn-border wow shake">SHOW MORE KNACKS</a>
+        </div><!-- End .text-center -->
+    </div><!-- End .container -->
+
+</div><!-- End .knacks-section -->
+
+<div class="tweets-section">
+    <div class="container">
+        <h3 class="title">Tweets from happy classmates</h3>
+        <div class="twitter-feed">
+            <ul class="tweet_list">
+                <li>
+                    <header>
+                        <figure>
+                            <img src="images/tweets/user1.jpg" alt="Jack Simmons">
+                        </figure>
+                        <h5>Jack Simmons</h5>
+                        <a href="#" target="_blank">@jsims</a>
+                    </header>
+                    <a class="twitter-icon" href="#" target="_blank"></a>
+                    <div class="tweet-content">Great service <a href="#">@uknack!</a> Been having a blast learning and trying out new knacks. If only my business classes were this exciting. <a href="#">#sighs</a></div><!-- End .tweet-content -->
+                </li>
+                <li>
+                    <header>
+                        <figure>
+                            <img src="images/tweets/user2.jpg" alt="James Poter">
+                        </figure>
+                        <h5>James Poter</h5>
+                        <a href="#" target="_blank">@magicjp</a>
+                    </header>
+                    <a class="twitter-icon" href="#" target="_blank"></a>
+                    <div class="tweet-content">How in the world did we get through college before <a href="#">@Uknack</a>? It’s so easy to hire someone to help you get things done. I just wish I had found it sooner.</div><!-- End .tweet-content -->
+                </li>
+                <li>
+                    <header>
+                        <figure>
+                            <img src="images/tweets/user3.jpg" alt="James Poter">
+                        </figure>
+                        <h5>Jessica Morgan</h5>
+                        <a href="#" target="_blank">@jessen</a>
+                    </header>
+                    <a class="twitter-icon" href="#" target="_blank"></a>
+                    <div class="tweet-content">If you haven’t already done so, you have to check out <a href="#">@uknack</a>. It might be the greatest invention for college students since the frizz-bee. </div><!-- End .tweet-content -->
+                </li>
+                <li>
+                    <header>
+                        <figure>
+                            <img src="images/tweets/user1.jpg" alt="Jack Simmons">
+                        </figure>
+                        <h5>Jack Simmons</h5>
+                        <a href="#" target="_blank">@jsims</a>
+                    </header>
+                    <a class="twitter-icon" href="#" target="_blank"></a>
+                    <div class="tweet-content">Great service <a href="#">@uknack!</a> Been having a blast learning and trying out new knacks. If only my business classes were this exciting. <a href="#">#sighs</a></div><!-- End .tweet-content -->
+                </li>
+                <li>
+                    <header>
+                        <figure>
+                            <img src="images/tweets/user2.jpg" alt="James Poter">
+                        </figure>
+                        <h5>James Poter</h5>
+                        <a href="#" target="_blank">@magicjp</a>
+                    </header>
+                    <a class="twitter-icon" href="#" target="_blank"></a>
+                    <div class="tweet-content">How in the world did we get through college before <a href="#">@Uknack</a>? It’s so easy to hire someone to help you get things done. I just wish I had found it sooner.</div><!-- End .tweet-content -->
+                </li>
+                <li>
+                    <header>
+                        <figure>
+                            <img src="images/tweets/user3.jpg" alt="James Poter">
+                        </figure>
+                        <h5>Jessica Morgan</h5>
+                        <a href="#" target="_blank">@jessen</a>
+                    </header>
+                    <a class="twitter-icon" href="#" target="_blank"></a>
+                    <div class="tweet-content">If you haven’t already done so, you have to check out <a href="#">@uknack</a>. It might be the greatest invention for college students since the frizz-bee. </div><!-- End .tweet-content -->
+                </li>
+                <li>
+                    <header>
+                        <figure>
+                            <img src="images/tweets/user1.jpg" alt="Jack Simmons">
+                        </figure>
+                        <h5>Jack Simmons</h5>
+                        <a href="#" target="_blank">@jsims</a>
+                    </header>
+                    <a class="twitter-icon" href="#" target="_blank"></a>
+                    <div class="tweet-content">Great service <a href="#">@uknack!</a> Been having a blast learning and trying out new knacks. If only my business classes were this exciting. <a href="#">#sighs</a></div><!-- End .tweet-content -->
+                </li>
+                <li>
+                    <header>
+                        <figure>
+                            <img src="images/tweets/user2.jpg" alt="James Poter">
+                        </figure>
+                        <h5>James Poter</h5>
+                        <a href="#" target="_blank">@magicjp</a>
+                    </header>
+                    <a class="twitter-icon" href="#" target="_blank"></a>
+                    <div class="tweet-content">How in the world did we get through college before <a href="#">@Uknack</a>? It’s so easy to hire someone to help you get things done. I just wish I had found it sooner.</div><!-- End .tweet-content -->
+                </li>
+            </ul>
+        </div><!-- End .twitter-feed -->
+    </div><!-- End .container -->
+</div><!-- End .tweets-section -->
+
+
+
+
+
+<!--- jQuery -->
+<!-- Smoothscroll -->
+<!--
+<script src="js/smoothscroll.js"></script>
+
+<script src="js/bootstrap.min.js"></script>
+<script src="js/headroom.min.js"></script>
+<script src="js/retina.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/twitter/jquery.tweet.min.js"></script>
+<script src="js/main.js"></script> -->
+	
+

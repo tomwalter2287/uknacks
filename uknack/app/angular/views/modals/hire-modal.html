@@ -1,0 +1,113 @@
+<!--register-email-modal-->
+<form class="hire-modal-form">
+    <div class="modal-header ">
+        <button type="button" class="close" ng-click="cancel()" title="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="">Hire <span class="blue-color">Sarah Simon</span></h4>
+    </div><!-- End .modal-header -->
+    <div class="modal-body ">
+        <div class="modal-body-title font-3">Get up to 15% discount when you share this knack!</div>
+        <div class="hire-share-item">
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 item-field1">
+                    <img class="discount-img" src="images/sprites-images/discount.png" />
+                    <img class="hire-social-icon" src="images/sprites-images/facebook-big.png" />
+                </div> 
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10 item-field2">
+                    <div class="font-4 font-bold field-title">Share on Facebook</div>
+                    <div class="font-5 gray-color">Get 5% discount when you share on facebook</div> 
+                </div> 
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item-field3">
+                    <button type="submit" class="btn btn-custom btn-sm btn-custom6 btn-border " ng-click="">
+                        SHARE
+                    </button>
+                </div>              
+            </div>  
+        </div>  
+
+        <div class="hire-share-item">
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 item-field1">
+                    <img class="discount-img" src="images/sprites-images/discount.png" />
+                    <img class="hire-social-icon" src="images/sprites-images/twitter-big.png" />
+                </div> 
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10 item-field2">
+                    <div class="font-4 font-bold field-title">Share on Twitter</div>
+                    <div class="font-5 gray-color">Get 5% discount when you share on facebook</div> 
+                </div> 
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item-field3">
+                    <button type="submit" class="btn btn-custom btn-sm btn-custom6 btn-border" ng-click="">
+                        SHARE
+                    </button>
+                </div>              
+            </div>  
+        </div> 
+        <div class="hire-share-item">
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 item-field1">
+                    <img class="discount-img" src="images/sprites-images/discount.png" />
+                    <img class="hire-social-icon" src="images/sprites-images/instagram-big.png" />
+                </div> 
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10 item-field2">
+                    <div class="font-4 font-bold field-title">Share on Instagram</div>
+                    <div class="font-5 gray-color">Get 5% discount when you share on facebook</div> 
+                </div> 
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item-field3">
+                    <button type="submit" class="btn btn-custom btn-sm btn-custom9" ng-click="">
+                        SAVED 5%
+                    </button>
+                </div>              
+            </div>  
+        </div> 
+
+        <div class="row" >
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-item">
+                <div class="modal-body-title font-3">Payment Options</div>
+                <div class="payment-item" ng-repeat="item in paymentItemList track by $index" ng-class="{'payment-item-active': $index==activeIndex}" ng-click="activeOption($index)">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-6 col-sm-2 col-xs-2">
+                            <div class="radio-option-item" >
+                                <i class="fa fa-circle" ng-class="{'radio-option-active': $index==activeIndex, 'margin-top-2px': $index==1}"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <img class="" src="{{item.img}}" />
+                            <label class="input-desc">{{item.detail}}</label>
+                        </div>    
+                    </div>    
+                </div>  
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-item">
+                <div class="order-body">
+                    <div class="hire-payment-item">
+                        <div class="item-wrapper">
+                            <a class="font-5 blue-color">Learn how to use your iPhone quick and easy!</a>
+                        </div>
+                    </div>    
+                    <div class="hire-payment-item font-4 border-top-bottom">
+                        <div class="item-wrapper">
+                            <div>
+                                <div class="left">Subtotal:</div>
+                                <div class="right">$ 65.00</div>
+                            </div>   
+                            <div>
+                                <div class="left">Sharing discount:</div>
+                                <div class="right green-color">%5</div>
+                            </div>    
+                        </div>
+                    </div>    
+                    <div class="hire-payment-item font-2">
+                        <div class="item-wrapper">
+                            <div class="left">Total:</div>
+                            <div class="right">$62.75</div>
+                        </div>
+                    </div>    
+                </div>    
+            </div>    
+        </div>   
+    </div><!-- End .modal-body -->
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-lg btn-custom btn-block" ng-click="paidCash()"><strong>PAY IN CASH</strong>
+            <i class="icon-plus"></i>
+        </button>
+    </div><!-- End .modal-footer -->
+</form>

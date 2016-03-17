@@ -1,0 +1,138 @@
+<form class="form knack-modal-form" name="postForm">
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" title="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="modallabel">EDIT YOUR ITEM {{item_type}}</h4>
+</div><!-- End .modal-header -->
+<div class="modal-body">
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+                <label class="input-desc">Would you like to be ANONYMOUS?</label>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+                <div class="radio-button">
+                    <input id="anonymous-yes" type="radio" name="anonymous" value="yes" ng-model="item.anonymous">
+                    <label for="anonymous-yes"><span></span>YES</label>
+                    <input id="anonymous-no" type="radio" name="anonymous" value="no" ng-model="item.anonymous">
+                    <label for="anonymous-no"><span></span>NO</label>
+                    <a class="info" ng-click="openAnonymouseInfoModal()"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" ng-show="item.anonymous == 'yes'">
+        <label for="item-username" class="input-desc">CHOOSE YOUR USERNAME</label>
+        <input type="text" class="form-control input-lg" id="item-username" ng-model="item.username" placeholder="&ldquo;e.g. Loving Panda&rdquo;" required>
+    </div><!-- End .from-group -->
+
+    <div class="form-group">
+        <label for="knack-subject" class="input-desc">ITEM HEADLINE</label>
+        <input type="text" class="form-control input-lg" id="knack-subject" ng-model="item.name" placeholder="&ldquo;E.g. iPhone 6S + Case + 12/m Apple Care&rdquo;" required>
+        <span class="error" ng-show="item.name.$error.required">Required!</span>
+    </div><!-- End .from-group -->
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+                <label class="input-desc">ITEM CATEGORY</label>
+                <div class="dropdown-box-container">
+                    <div class="dropdown-box" ng-init="isCategoriesBoxOpened=false; categoriesBoxTitle='Category selection'" ng-class="{'open': isCategoriesBoxOpened == true}" outside-click="isCategoriesBoxOpened=false">
+                        <div class="dropdown-box-title" ng-click="isCategoriesBoxOpened = !isCategoriesBoxOpened">
+                            {{categoriesBoxTitle}}
+                        </div>
+                        <div class="dropdown-box-content">
+                            <div class="col-md-6 category-item" ng-repeat="category in itemCategories" ng-click="$parent.categoriesBoxTitle=category.name;$parent.knack.category=category.id;">
+                                <div class="radio-button">
+                                    <input type="radio" value="{{category.id}}" name="knackCategory" ng-checked="$parent.knack.category==category.id">
+                                    <label><span></span>{{category.name}}</label>
+                                </div>
+                            </div>
+                            <!--
+                            <div ng-repeat="category in itemCategories">
+                                <span ng-click="$parent.categoriesBoxTitle=category.name; $parent.knack.category=category.id; $parent.isCategoriesBoxOpened = !$parent.isCategoriesBoxOpened">{{category.name}}</span>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+                <label for="knack-price" class="input-desc">PRICE</label>
+                <input type="text" class="form-control input-lg" id="knack-price" ng-model="item.price" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="knack-message" class="input-desc">DETAIL YOUR ITEM</label>
+        <div class="textarea-wrapper">
+            <textarea name="#" id="knack-message" cols="30" rows="2" class="form-control" ng-model="item.description" placeholder="&ldquo;E.g. Selling a brand new iPhone 6S w/ 12 months Apple Care. I already have a 6S and got a new one when I switched jobs. Message me if you're interested.!&rdquo;"></textarea>
+            <figure class="textarea-icon first">
+                <i class="icon-camera"></i>
+                <input type="file" file-model="item.photo" class="fileupload">
+            </figure>
+        </div><!-- End .textarea-wrapper -->
+    </div><!-- End .from-group -->
+
+    <div class="row">
+        <div class="col-xs-12 col-md-7">
+            <div class="form-group">
+                <label for="knack-message" class="input-desc">UPLOAD UP TO FIVE IMAGES</label>
+                <div class="upload-image active"></div>
+                <div class="upload-image"></div>
+                <div class="upload-image"></div>
+                <div class="upload-image"></div>
+                <div class="upload-image"></div>
+            </div><!-- End .from-group -->
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <div class="form-group">
+                <label for="knack-message" class="input-desc">PITCH YOUR KNACK in 20 secs</label>
+                <a class="upload-video">(UPLOAD A VIDEO)</a>
+                <a class="info" ng-click="openInfoModal()"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="knack-schedule" class="input-desc">WHAT'S YOUR SCHEDULE LIKE?</label>
+        <input type="input" id="knack-schedule" ng-model="knack.schedule" class="form-control input-lg" placeholder="&ldquo;e.g. I have class in the morning so anytime after 2pm is good&rdquo;">
+    </div><!-- End .from-group -->
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+                <label for="knack-schedule" class="input-desc">ARE YOU WILLING TO DELIVERED?</label>
+                <div class="radio-button">
+                    <input id="willing-yes" type="radio" name="willing" value="yes">
+                    <label for="willing-yes"><span></span>YES</label>
+                    <input id="willing-no" type="radio" name="willing" value="no">
+                    <label for="willing-no"><span></span>NO</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+                <label for="knack-schedule" class="input-desc">HOW FAR?</label>
+                <div class="dropdown-box-container">
+                    <div class="dropdown-box form-control" ng-init="isMilesBoxOpened=false;milesTitle='On Campus';" ng-class="{'open': isMilesBoxOpened == true}" outside-click="isMilesBoxOpened=false">
+                        <div class="dropdown-box-title" ng-click="isMilesBoxOpened = !isMilesBoxOpened">{{milesTitle}}</div>
+                        <div class="dropdown-box-content">
+                            <div ng-click="$parent.milesTitle=m.name" ng-repeat="m in milesCategories"><span>{{m.name}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- End .modal-body -->
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-custom btn-block" ng-click="save_item()"><strong>SAVE</strong><i class="icon-plus"></i></button>
+</div><!-- End .modal-footer -->
+</form>

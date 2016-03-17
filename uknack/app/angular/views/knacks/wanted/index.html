@@ -1,0 +1,170 @@
+    <div id="content" role="main" ng-class="{single: single_knack }">
+        <div ng-hide="single_knack">
+            <div class="top-filter-container">
+                <div class="container">
+                    <div class="filter-row">
+                        <div class="filter-cell search-cell">
+                            <form class="search-form" role="search">
+                                <input type="search" class="form-control" ng-model="filter.search_text" placeholder="Search by name, classmate name, knack etc ...">
+                                <input type="button" value="Search" class="search-btn" title="Search Now" ng-click="fullSearch()">
+                                <a href="#" class="search-close-btn" title="Close Search"><span aria-hidden="true">&times;</span></a>
+                            </form>
+                            <a href="#" class="mobile-search-btn" title="Search now">Search now</a>
+
+                        </div><!-- End .filter-cell -->
+                        <div class="filter-cell order-cell">
+                            <!--
+                            <select name="#" class="form-control" id="item-sort" ng-model="filter.sort_by">
+                                <option value="recently">Sort By: Most recent</option>
+                                <option value="popular">Sort By: Most popular</option>
+                            </select>
+                            -->
+                            <div class="sortby-text gray-color" ng-init="isShowSortContent = false" ng-click="isShowSortContent = !isShowSortContent">Sort by : {{selectedItem}}</div >
+                            <div class="sortby-content" ng-show="isShowSortContent">
+                                <div class="sort-item gray-color" ng-repeat="sortItem in sortList track by $index" ng-click="selectItem($index)" >
+                                    {{sortItem}}
+                                </div>
+                            </div>
+                        </div><!-- End .filter-cell -->
+                        <div class="filter-cell layout-cell">
+                            <a href="javascript:void(0);" class="layout-btn icon-apply-flip" title="Flip" ng-click="flipAll()">Flilp</a>
+                            <!--
+                            <a href="javascript:void(0);" class="layout-btn icon-grid active" title="Layout Grid" ng-click="show_grid()">Layout Grid</a>
+                            <a href="javascript:void(0);" class="layout-btn icon-list" title="Layout List" ng-click="show_list()">Layout List</a>
+                            -->
+                        </div><!-- End .filter-cell -->
+                    </div><!-- End .top-filter-row -->
+                </div><!-- end .container -->
+            </div><!-- End .top-filter-container -->
+
+            <div class="container">
+                <p class="content-info"><strong>{{ knacks.length }}</strong> knacks found</p>
+
+                <div class="row" style="margin-left: -13px;">
+                    <div id="item-container">
+                        <div id="item-container" class="flip-wrapper">
+                            <div class="item-wrapper flip-container col-md-4 col-lg-3 col-sm-6 col-xs-12" ng-repeat="item in knacks">
+                                <div class="flipper" >
+                                    <article class="item front" ng-class="{'flip-action-front': item.flip}">
+                                        <div class="item-header">
+                                            <ul photo-slider data-gallery="false">
+                                                <!--
+                                                <li ng-repeat="photo in item.thumb_photo track by $index" data-thumb="{{photo}}" class="knack-slide-item">
+                                                    <a href="" title="{{item.title}}" class="item-photo">
+                                                        <img alt="{{ item.title }}" ng-src="{{ photo }}" />
+                                                    </a>
+                                                    <span class="item-price">${{item.price}}</span>
+                                                    <div class="gradient-layout"></div>
+                                                </li>
+                                                -->
+                                                <li data-thumb="{{item.photo}}" class="knack-slide-item">
+                                                    <a href="" title="{{item.name}}" class="item-photo">
+                                                        <img alt="{{ item.name }}" ng-src="{{ item.photo }}" />
+                                                    </a>
+                                                    <span class="item-price">${{item.price}}</span>
+                                                    <div class="gradient-layout"></div>
+                                                </li>
+                                            </ul>
+                                            
+                                            <div class="item-fav">
+                                                <a href="" class="icon-flip" title="Flip" ng-click="flip(item)">Flip</a>
+                                            </div>
+                                        </div>
+                                        <div class="item-content">
+                                            <h2 class="item-title">
+                                                <a ui-sref="knack-wanted-single({id:item.id})" href="" title="{{item.name}}"><p>{{item.name}}</p></a>
+                                            </h2>
+                                            <p class="item-desc">{{item.description}}</p>
+                                            <div class="line-separator"></div>
+                                            <div class="item-meta">
+                                                <div class="item-category">
+                                                    <a href="" title="{{item.owner_college}}">{{item.owner_college}}</a>
+                                                </div>
+                                                <span class="dot-separator"></span>
+                                                <div class="item-category">
+                                                    <a href="" title="Udelivery">{{item.category_name}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+
+                                    <article class="item back item-profile" ng-class="{'flip-action-back': item.flip}">
+                                        <div class="item-header text-center">
+                                            <figure class="item-avatar" ng-click="showVideoModal(item.video_url)">
+                                                <img ng-src="{{item.owner_picture}}" alt="User" title="{{item.owner_name}}">
+                                                <span class="owner-status" ng-class="{'on': item.owner_online}"></span>
+                                                <a href="" class="play-video"></a>
+                                            </figure>
+                                            <a class="profile-name">{{item.owner_name}}</a>
+                                            <div class="profile-item gray-color">{{item.owner_college}}</div>
+                                            <div class="profile-item gray-color">
+                                                {skill} &middot; {{item.owner_age}} y/o
+                                            </div>
+                                            <a class="icon-check"></a>
+                                            <a class="icon-flip" ng-click="flip(item)"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <div class="form-group">
+                                                <p class="item-price">${cost}</p>
+                                                <p class="profile-item gray-color">{created}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="rating">
+                                                    <div class="ratings-container sm">
+                                                        <span class="ratings-wrapper">
+                                                            <span class="ratings" ng-style="{'width': '80%'}"></span>
+                                                        </span>
+                                                        <span class="ratings-count gray-color">(4)</span>
+                                                    </div>
+                                                </div>
+                                                <p class="profile-item gray-color">Last seen: {last_seen}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <ul class="connection-list">
+                                                    {connection list}
+                                                    <!--
+                                                    <li ng-repeat="figure in item.profile.connections">
+                                                        <figure><img ng-src="{{figure}}"></figure>
+                                                    </li>
+                                                    <li><span class="more-connections">+{{item.profile.conn_more_count}}</span></li>
+                                                    -->
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>    
+                            </div>
+                        </div>    
+                    </div><!-- End #item-container  -->
+                </div><!-- End .row  -->
+
+                <div class="loadmore-container text-center">
+                    <a href="javascript:void(0);" class="btn-loadmore btn btn-custom3 btn-border" ng-click="showMore()">Show more knacks</a>
+
+                </div><!-- End .text-center -->
+            </div><!-- End .container -->
+        </div>
+        <div ng-show="single_knack" ng-include="'views/knacks/single/index.html'"></div>
+        <footer class="footer">
+            <div class="container">
+                <p class="copyright">&copy; 2015 Uknack. All rights reserved</p>
+                <ul class="footer-menu clearfix">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Privacy</a></li>
+                </ul>
+                <div class="social-icons">
+                    <a href="#" class="social-icon icon-facebook social-icon1" title="Like us on Facebook">Facebook</a>
+                    <a href="#" class="social-icon icon-twitter social-icon1" title="Find us on Twitter">Twitter</a>
+                    <a href="#" class="social-icon icon-instagram social-icon1" title="Find us on Twitter">Instagram</a>
+                </div><!-- End .social-icons -->
+            </div><!-- End .container -->
+        </footer>
+    </div><!-- End #content -->
+
+    <aside class="sidebar" role="complementary" ng-include="'views/left/main_left.html'" onload="mainLeftLoaded()"></aside>
+
+    </aside>
+    <!--
+    <div class="sidebarbg-mobile"></div><!-- end .sidebarbg-mobile -->

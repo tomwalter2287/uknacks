@@ -1,0 +1,63 @@
+    <div class="box-owner" ng-class="{'box-min':activeChatbox}">
+        <div class="item-owner">
+            <figure>
+                <img src="{{ receiptData.owner_picture_medium }}" alt="{{ receiptData.owner_name }}">
+                <span class="owner-status" ng-class="{'on': receiptData.owner_online }"></span>
+            </figure>
+            <div class="owner-meta">
+                <span ng-show="activeChatbox">Currently chatting with</span>
+                <h4><a href="#">{{ receiptData.owner_name }}</a></h4>
+                <span ng-hide="activeChatbox">{{ receiptData.owner_college }}<span class="dot-separator"></span>{{ receiptData.owner_age }} y/o</span>
+            </div><!-- End .owner-meta -->
+            <div class="ratings-container" ng-hide="activeChatbox">
+                <div class="ratings-wrapper">
+                    <div class="ratings" style="width:80%;"></div><!-- End .ratings -->
+                </div><!-- End .ratings-wrapper -->
+                <span class="ratings-count"><strong>4.2</strong> / 5.0</span>
+            </div><!-- End .ratings-container -->
+        </div><!-- End .item-owner -->
+        <div ng-hide="receiptData.owner_id==profile_user.user_id">
+            <a href="#" class="btn btn-custom btn-block" ng-hide="activeChatbox"><strong>BUY ITEM</strong></a>
+            <a class="btn btn-custom5 btn-border btn-block" ng-click="toggleChatbox()" ng-hide="receiptData.owner_id==profile_user.user_id || activeChatbox">Chat Now</a>
+        </div>
+        <!-- chatbox -->
+        <div ng-show="activeChatbox">
+        <div id="chats-content">
+            <div ng-repeat="message in Message.collection | orderBy:'-timeStamp' track by $index">
+                <div class="chat" ng-class="{reverse:message.data.sender_data.user_id==senderData.user_id}">
+                    <div class="chat-content">
+                        {{ message.data.message }}
+                    </div><!-- End .chat-content -->
+
+                    <div class="chat-meta-wrapper clearfix">
+                        <div class="item-owner">
+                            <figure ng-hide="mode=='flip'">
+                                <img src="images/users/chat/user1.png" alt="{{ message.data.sender_data.full_name }}">
+                            </figure>
+                            <div class="owner-meta">
+                                <h4>
+                                    <a href="#" ng-hide="message.data.sender_data.user_id==senderData.user_id">{{ message.data.sender_data.full_name }}</a>
+                                    <a href="#" ng-show="message.data.sender_data.user_id==senderData.user_id">Me</a>
+                                </h4>
+                                <!-- <span>Harvard University</span> -->
+                            </div><!-- End .owner-meta -->
+                        </div><!-- End .item-owner -->
+                        <!-- <div class="item-date">{{ message.timeStamp | date:'medium' }}</div><!-- End .item-date -->
+                    </div><!-- End .chat-meta- wrapper -->
+                </div><!-- End .chat -->
+            </div>
+            <div class="chatbox-footer">
+                <form ng-submit="submit(new_message)">
+                    <div class="input-group">
+                      <input type="text" class="form-control" ng-model="new_message" placeholder="Start typing" required>
+                      <span class="input-group-btn">
+                        <button class="btn btn-custom" type="submit">Send</button>
+                      </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    </div><!-- End .box-owner -->
+

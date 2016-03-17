@@ -1,0 +1,135 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-top">
+                <h2 class="item-title">{{ single_item.title }}</h2>
+                <div class="item-meta">
+                    <span class="date-icon"></span>
+                    <div class="item-date">{{ single_item.created_at }}</div>
+                    <span class="dot-separator"></span>
+                    <div class="item-category">
+                        <a href="#" title="Technology">{{ single_item.category_name }}</a>
+                    </div>
+                    <span class="h-separator"></span>
+                    <span class="view-icon"></span>
+                    <div class="item-view">{{ single_item.views }} views</div>
+                </div><!-- End .item-meta -->
+                <a href="" class="close-btn" title="Close" ng-click="closeSingle()">
+                    <span class="sr-only">Close Button</span>
+                    <span class="close-icon"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container special-container">
+    <div class="row special-row">
+        <div class="col-content">
+            <div class="single-item-desc">
+                <ul id="photosSlider" photo-slider>
+                    <li ng-repeat="photo in single_item.photos track by $index" data-thumb="{{photo}}">
+                        <img ng-src="{{ photo }}" />
+                    </li>
+                </ul>
+            </div>
+
+            <div class="single-item-desc">
+                <h3>I need help with...</h3>
+                <p>{{ single_item.description }}</p>
+            </div>
+
+            <div class="line-separator"></div>
+
+            <div class="single-item-desc">
+                <h3>What's my schedule like?</h3>
+                <p>{{ single_item.schedule }}</p>
+            </div>
+
+            <div class="single-item-desc">
+                <h3>Do I need this service delivered?</h3>
+                <p>Yes<span class="dot-separator"></span>{{ single_item.delivered }}</p>
+            </div>
+
+            <div class="single-item-desc">
+                <h3>Willing to pay...</h3>
+                <p>${{ single_item.cost }}</p>
+            </div>
+
+            <div class="line-separator"></div>
+
+            <div class="reviews-container">
+                <h3>Reviews (2)<a href="#">Write review</a></h3>
+                <div class="review" ng-repeat="review in single_item.reviews">
+                    <div class="review-wrapper clearfix">
+                        <div class="item-owner">
+                            <figure>
+                                <img ng-src="{{review.avatar}}" alt="{{review.name}}">
+                            </figure>
+                            <div class="owner-meta">
+                                <h4><a href="#">{{review.name}}</a></h4>
+                                <span>{{review.college}}</span>
+                            </div><!-- End .owner-meta -->
+                        </div><!-- End .item-owner -->
+                        <div class="ratings-container">
+                            <div class="ratings-wrapper">
+                                <div class="ratings" ng-style="{'width': (review.rate * 100 / 5) + '%'}"></div><!-- End .ratings -->
+                            </div><!-- End .ratings-wrapper -->
+                        </div><!-- End .ratings-container -->
+                    </div><!-- End .review-wrapper -->
+                    <div class="review-content">
+                        {{review.content}}
+                    </div><!-- End .review-content -->
+                </div><!-- .End .review -->
+
+            </div><!-- End .reviews-container -->
+        </div><!-- End .col-content -->
+
+        <div class="col-side">
+            <article class="item item-profile">
+                <div class="item-header text-center">
+                    <a class="icon-check"></a>
+                    <figure class="item-avatar" ng-click="showVideoModal(single_item.profile.video_url)">
+                        <img ng-src="{{single_item.profile.avatar}}" alt="{{single_item.profile.name}}">
+                        <span class="owner-status on"></span>
+                        <a href="" class="play-video"></a>
+                    </figure>
+                    <a class="profile-name">{{single_item.profile.name}}</a>
+                    <div class="profile-item">{{single_item.profile.college}}</div>
+                    <div class="profile-item">
+                        {{single_item.profile.skill}} &middot; {{single_item.profile.age}} y/o
+                    </div>
+                </div>
+                <div class="item-content">
+                    <div class="form-group">
+                        <p class="item-price">${{single_item.profile.cost}}</p>
+                        <p class="profile-item">{{single_item.profile.created}}</p>
+                    </div>
+                    <div class="form-group">
+                        <div class="rating">
+                            <div class="ratings-container sm">
+                                <span class="ratings-wrapper">
+                                    <span class="ratings" ng-style="{'width':(single_item.profile.rate * 100 / 5) + '%'}"></span>
+                                </span>
+                                <span class="ratings-count">({{single_item.profile.rate}})</span>
+                            </div>
+                        </div>
+                        <p class="profile-item">Last seen: {{single_item.last_seen}}</p>
+                    </div>
+                </div>
+                <div class="item-action">
+                    <a href="javascript:void(0);" class="btn btn-sm btn-custom btn-block" ng-click="openByItemModal()">
+                        <strong>BUY ITEM</strong>
+                    </a>
+                    <a href="javascript:void(0);" class="btn btn-sm btn-custom2 btn-border btn-block" ng-click="">
+                        <strong>Chat with me I'am online!</strong>
+                    </a>
+                </div>
+            </article>
+            <!--
+            <chatbox receipt-data="single_item" sender-data="profile_user" mode="'flip'"></chatbox>
+            -->
+
+        </div><!-- End .col-side -->
+    </div><!-- End .special-row -->
+</div><!-- End .container -->

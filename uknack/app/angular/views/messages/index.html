@@ -1,0 +1,810 @@
+    <div id="content" role="main" class="profile">
+        <div class="container special-container">
+            <h2 class="h3 chat-title chat-nav-wrapper">
+                <div class="chat-nav" ng-click="nowContainer='messages'" ng-class="{'blue-color2': nowContainer=='messages'}"><span class="badge">{{ new_message_count }}</span>Messages</div>
+                <div class="chat-nav" ng-click="nowContainer='notifications'" ng-class="{'blue-color2': nowContainer=='notifications'}"><span class="badge">{{ new_notification_count }}</span>Notifications</div>
+                <div class="chat-nav no-border-right" ng-click="nowContainer='connections'" ng-class="{'blue-color2': nowContainer=='connections'}"><span class="badge">{{ new_connection_count }}</span>Connections</div>
+            </h2>
+            <div class="messages-container" ng-if="nowContainer=='messages'">
+                <div class="chats-list contact-list">
+                    <ul ng-repeat="contact in contacts track by $index" class="contact-item-wrapper" outside-click="isIndex=-1">
+                        <li class="item-owner contact-item" ng-click="select_contact(contact)">
+                            <figure>
+                                <img ng-src="{{ contact.picture }}" class="contact-list-picture" alt="{{ contact.full_name }}">
+                                <span class="owner-status" ng-class="{'owner-status on': contact.is_online }"></span>
+                            </figure>
+                            <div class="owner-meta">
+                                <h3><a href="" ng-click="isIndex=$index">{{ contact.full_name }}</a><span class="item-date">{{ contact.last_received_at }}</span></h3>
+                                <p class="chat-excerpt">{{ contact.last_message }}</p>
+                            </div><!-- End .owner-meta -->
+
+                        </li>
+                        <article class="item item-profile item-profile-cus" ng-show="isIndex==$index" >
+                                        <div class="item-header profile-item-header">
+                                            <figure class="user-picture-wrapper">
+                                                <img src="images/users/user.png" alt="Derek Wilson">
+                                                <span class="owner-status profile-owner-status on" ng-class="{on: connection.status=='on'}"></span>
+                                            </figure>
+                                            <a class="profile-name ng-binding">Derek Wilson</a>
+                                            <div class="profile-item ng-binding">Fisher College</div>
+                                            <div class="profile-item ng-binding">
+                                                Sophomore · 22y/o
+                                            </div>
+                                            <a class="icon-check"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <div class="form-group">
+                                                <p class="item-price ng-binding">$2014</p>
+                                                <p class="profile-item profile-info-item ng-binding">Since dec 2014</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="rating">
+                                                    <div class="ratings-container">
+                                                        <span class="ratings-wrapper">
+                                                            <span class="ratings" style="width:80%;"></span>
+                                                        </span>
+                                                        <span class="ratings-count">(4)</span>
+                                                    </div>
+                                                </div>
+                                                <p class="profile-item profile-info-item ng-binding">Last seen: 2 hours ago</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <ul class="connection-list connection-list-cus">
+                                                    <li><figure class="user-picture-wrapper"><img src="images/users/user1.jpg"></figure></li>
+                                                    <li><figure class="user-picture-wrapper"><img src="images/users/user2.jpg"></figure></li>
+                                                    <li><figure class="user-picture-wrapper"><img src="images/users/user3.jpg"></figure></li>
+                                                    <li><figure class="user-picture-wrapper"><img src="images/users/user4.jpg"></figure></li>
+                                                    <li class="gray-color like-count">+34</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                        </article>
+
+                    </ul>
+                </div><!-- End .chats-list -->
+                <div class="chats-container chats-container-cus">
+                    
+                    <div class="chats-wrapper"
+                        ng-nicescroll
+                        nice-option="{zindex: 9999,
+                                   autohidemode: true,
+                                   background: '' ,
+                                   cursorcolor: '#d7e0e1',
+                                   cursorwidth: '5px',
+                                   cursorborder: 'none',
+                                   cursorborderradius: '4px'}">
+                        <div id="chats-content" class="chats-content">
+                            <header class="messages-top-header">
+                                <h3><span>YESTERDAY</span></h3>
+                            </header>
+                            <div ng-repeat="message in old_messages track by $index">
+                                <div class="chat" ng-class="{reverse:message.sender.id==profile_user.user_id}">
+                                    <div class="chat-content chat-content-cus font-5" >
+                                        {{ message.body }}
+                                    </div><!-- End .chat-content -->
+
+                                    <div class="chat-meta-wrapper clearfix">
+                                        <div class="item-owner">
+                                            <figure>
+                                                <img ng-src="{{ message.sender.picture }}" width="75px" height="75px" alt="Katy Perry">
+                                            </figure>
+                                            <div class="owner-meta" ng-class="{'left': 'message.sender.id==profile_user.user_id'}">
+                                                <h4>
+                                                    <a href="#" ng-hide="message.sender.id==profile_user.user_id">{{ message.sender.full_name }}</a>
+                                                    <a href="#" ng-show="message.sender.id==profile_user.user_id">Me</a>
+                                                </h4>
+                                                <span>{{ message.sender.college }}</span>
+                                            </div><!-- End .owner-meta -->
+                                        </div><!-- End .item-owner -->
+                                        <div class="item-date">{{ message.created_at | date:'medium' }}</div><!-- End .item-date -->
+                                    </div><!-- End .chat-meta- wrapper -->
+                                </div><!-- End .chat -->
+                            </div>
+                            <header class="messages-header">
+                                <h3><span>TODAY</span></h3>
+                            </header>
+                            <div ng-repeat="message in Message.collection | orderBy:'timeStamp' track by $index">
+                                <div class="chat" ng-class="{reverse:message.data.sender_data.user_id==profile_user.user_id}">
+                                    <div class="chat-content chat-content-cus font-5">
+                                        {{ message.data.message }}
+                                    </div><!-- End .chat-content -->
+
+                                    <div class="chat-meta-wrapper clearfix">
+                                        <div class="item-owner">
+                                            <figure>
+                                                <img ng-src="{{ message.data.sender_data.picture }}" alt="Katy Perry">
+                                            </figure>
+                                            <div class="owner-meta" ng-class="{'left': 'message.data.sender_data.user_id==profile_user.user_id'}">
+                                                <h4>
+                                                    <a href="#" ng-hide="message.data.sender_data.user_id==profile_user.user_id">{{ message.data.sender_data.full_name }}</a>
+                                                    <a href="#" ng-show="message.data.sender_data.user_id==profile_user.user_id">Me</a>
+                                                </h4>
+                                                <span>{{ message.data.sender_data.college }}</span>
+                                            </div><!-- End .owner-meta -->
+                                        </div><!-- End .item-owner -->
+                                        <div class="item-date">{{ message.timeStamp | date:'medium' }}</div><!-- End .item-date -->
+                                    </div><!-- End .chat-meta- wrapper -->
+                                </div><!-- End .chat -->
+                            </div>
+                        </div>
+                    </div><!-- End .chats-wrapper -->
+                    <footer>
+                        <form ng-submit="submit(new_message)">
+                            <div class="input-group">
+                                <input type="text" class="form-control font-5" ng-model="new_message" placeholder="Your message..." autofocus required>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-custom" type="submit"><strong>SEND</strong></button>
+                                </span>
+                            </div>
+                        </form>
+                    </footer>
+                </div><!-- End .chats-container -->
+            </div>
+            <div class="notifications-containder messages-container" ng-if="nowContainer=='notifications'">
+                <div class="chats-list contact-list">
+                    <ul ng-repeat="contact in contacts track by $index">
+                        <li class="item-owner contact-item" ng-click="select_contact(contact)">
+                            <figure>
+                                <img ng-src="{{ contact.picture }}" class="contact-list-picture" alt="{{ contact.full_name }}">
+                                <span class="owner-status" ng-class="{'owner-status on': contact.is_online }"></span>
+                            </figure>
+                            <div class="owner-meta">
+                                <h3><a href="">{{ contact.full_name }}</a><span class="item-date">{{ contact.last_received_at }}</span></h3>
+                                <div class="owner-state-content">
+                                    <div class="left gray-color font-5 contact-state">{{contact.state_text}}</div>
+                                    <img class="right contact-state-icon" src="images/sprites-images/S-green-icon.png" ng-show="contact.state=='item' || contact.state=='knack'">
+                                    <img class="right contact-state-icon" src="images/sprites-images/check-green.png" ng-show="contact.state=='connected'" ng-click="toggleConnect(contact, $event)">
+                                    <img class="right contact-state-icon" src="images/sprites-images/check-gray.png" ng-show="contact.state=='disconnected'" ng-click="toggleConnect(contact, $event)">
+                                </div>    
+                            </div><!-- End .owner-meta -->
+                        </li>
+                    </ul>
+                </div><!-- End .chats-list -->
+                <div class="chats-container chats-container-cus">
+                    
+                    <div class="chats-wrapper"
+                        ng-nicescroll
+                        nice-option="{zindex: 9999,
+                                   autohidemode: true,
+                                   background: '' ,
+                                   cursorcolor: '#d7e0e1',
+                                   cursorwidth: '5px',
+                                   cursorborder: 'none',
+                                   cursorborderradius: '4px'}">
+                        <div id="chats-content" class="chats-content">
+                            <div class="messagege-contents-wrapper">
+                                <div class="header">
+                                    <div class="icon-wrapper">
+                                        <img class="img-icon" src="images/login_logo.png">
+                                    </div>                                    
+                                    <div class="title">
+                                        <a href="" class="font-3" ng-if="nowState=='item'">JAMES PORTER BOUGHT YOUR ITEM</a>
+                                        <a href="" class="font-3" ng-if="nowState=='knack'">JAMES PORTER BOUGHT YOUR KNACK</a>
+                                        <a href="" class="font-3" ng-if="nowState=='connected'">JAMES PORTER CONNECTED WITH YOU</a>
+                                    </div>
+                                    <div class="gray-color font-3">
+                                        <div ng-if="nowState=='item'">Chat here with James to define the delivery location</div>
+                                        <div ng-if="nowState=='knack'">Chat here with James to start talking business</div>
+                                        <div ng-if="nowState=='connected'">Check the check mark on the top left of her photo to connect with her or start chatting</div>
+                                    </div>   
+                                </div> 
+                                <div class="center"> 
+                                    <article class="item item-profile item-profile-cus" ng-class="{'left': nowState=='item' || nowState=='knack'}">
+                                        <div class="item-header profile-item-header">
+                                            <figure>
+                                                <img src="images/users/user.png" alt="Derek Wilson">
+                                                <span class="owner-status profile-owner-status on" ng-class="{on: connection.status=='on'}"></span>
+                                            </figure>
+                                            <a class="profile-name ng-binding">Derek Wilson</a>
+                                            <div class="profile-item ng-binding">Fisher College</div>
+                                            <div class="profile-item ng-binding">
+                                                Sophomore · 22y/o
+                                            </div>
+                                            <a class="icon-check"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <div class="form-group">
+                                                <p class="item-price ng-binding">$2014</p>
+                                                <p class="profile-item profile-info-item ng-binding">Since dec 2014</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="rating">
+                                                    <div class="ratings-container">
+                                                        <span class="ratings-wrapper">
+                                                            <span class="ratings" style="width:80%;"></span>
+                                                        </span>
+                                                        <span class="ratings-count">(4)</span>
+                                                    </div>
+                                                </div>
+                                                <p class="profile-item profile-info-item ng-binding">Last seen: 2 hours ago</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <ul class="connection-list">
+                                                    <li><figure><img src="images/users/user1.jpg"></figure></li>
+                                                    <li><figure><img src="images/users/user2.jpg"></figure></li>
+                                                    <li><figure><img src="images/users/user3.jpg"></figure></li>
+                                                    <li><figure><img src="images/users/user4.jpg"></figure></li>
+                                                    <li class="gray-color like-count">+34</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </article>
+
+                                    <article class="item item-knack-cus" ng-class="{'right': nowState=='item' || nowState=='knack'}" ng-hide="nowState=='connected'">
+                                            <div class="item-header">
+                                                <a href="" title="I’ll be your sports buddy, and teach you climbing" class="item-photo ">
+                                                    <img src="images/sample/2.jpg" ng-src="images/sample/2.jpg" alt="I\’ll be your sports buddy, and teach you climbing">
+                                                </a>
+                                                <span class="item-price ng-binding">$30</span>
+                                                <div class="item-fav">
+                                                    <a class="icon-flip" title="Flip" ng-click="flip(item)">Flip</a>
+                                                </div>
+                                                <div class="gradient-layout"></div>
+                                            </div>
+                                            <div class="item-content">
+                                                <h2 class="item-title">
+                                                    <a class="font-5 ng-binding" ui-sref="knack-offered-single({id:item.id})" href="#/knacks/offered/4">Brand New Tennis Shoes</a>
+                                                </h2>
+                                                <p class="item-bidtext ng-binding">Hey everyone, I'm Automn, yeah like the season. I am currently offering computer repair. I charge $65/hr or a flat fee if the iss ....</p>
+                                                <div class="item-meta" >
+                                                    <div class="ratings-container sm">
+                                                        <div class="ratings-wrapper">
+                                                            <div style="width: 80%;" class="ratings" ng-style="{'width': (item.rate * 100 / 5) + '%'}"></div>
+                                                        </div>
+                                                        <span class="ratings-count ng-binding">(4)</span>
+                                                    </div>
+                                                    <span class="dot-separator"></span>
+                                                    <div class="item-category">
+                                                        <a class="ng-binding" href="" title="Udelivery"> Utech</a>
+                                                    </div>
+                                                </div>
+                                                <div class="item-owner" ng-click="">
+                                                    <figure>
+                                                        <img src="images/users/user1.jpg" ng-src="images/users/user1.jpg"  alt="Katy Perry">
+                                                        
+                                                    </figure>
+                                                    <div class="owner-meta">
+                                                        <h3 class="no-margin"><a class="ng-binding font-6 bold blue-color2" href="">Automn Barnsby</a><span class="owner-status on" ></span></h3>
+                                                        <div class="left gray-color font-6 ng-binding">Harvard Univsersity</div> 
+                                                    </div><!-- End .owner-meta -->
+                                                </div>
+                                            </div>
+                                    </article>
+                                </div>
+                            </div>    
+                        </div>
+                    </div><!-- End .chats-wrapper -->
+                    <footer>
+                        <form ng-submit="submit(new_message)">
+                            <div class="input-group">
+                                <input type="text" class="form-control font-5" ng-model="new_message" placeholder="Your message..." autofocus required>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-custom" type="submit"><strong>SEND</strong></button>
+                                </span>
+                            </div>
+                        </form>
+                    </footer>
+                </div><!-- End .chats-container -->
+            </div>
+            <div class="connects-containder messages-container" ng-if="nowContainer=='connections'">
+                <div class="chats-list contact-list">
+                    <ul ng-repeat="contact in contacts track by $index">
+                        <li class="item-owner contact-item" ng-click="select_contact(contact)">
+                            <figure>
+                                <img ng-src="{{ contact.picture }}" class="contact-list-picture" alt="{{ contact.full_name }}">
+                                <span class="owner-status" ng-class="{'owner-status on': contact.is_online }"></span>
+                            </figure>
+                            <div class="owner-meta">
+                                <h3><a href="">{{ contact.full_name }}</a><span class="item-date">{{ contact.last_received_at }}</span></h3>
+                                <div class="owner-state-content">
+                                    <img class="right contact-state-icon" src="images/sprites-images/check-green.png" ng-show="contact.state=='connected'" ng-click="toggleConnect(contact, $event)">
+                                    <img class="right contact-state-icon" src="images/sprites-images/check-gray.png" ng-show="contact.state!='connected'" ng-click="toggleConnect(contact, $event)">
+                                </div>    
+                            </div><!-- End .owner-meta -->
+                        </li>
+                    </ul>
+                </div><!-- End .chats-list -->
+                <div class="chats-container chats-container-cus">
+                    
+                    <div class="chats-wrapper"
+                        ng-nicescroll
+                        nice-option="{zindex: 9999,
+                                   autohidemode: true,
+                                   background: '' ,
+                                   cursorcolor: '#d7e0e1',
+                                   cursorwidth: '5px',
+                                   cursorborder: 'none',
+                                   cursorborderradius: '4px'}">
+                        <div id="chats-content" class="chats-content">
+                            <div class="messagege-contents-wrapper">
+                                <div class="header">
+                                    <div class="icon-wrapper">
+                                        
+                                    </div>                                    
+                                    <div class="title">
+                                        <a href="" class="font-3" ng-if="nowState=='item'">MESSAGE OR START CHATTING WITH JAMES</a>
+                                    </div> 
+                                </div> 
+                                <div class="center"> 
+                                    <article class="item item-profile item-profile-cus">
+                                        <div class="item-header profile-item-header">
+                                            <figure>
+                                                <img src="images/users/user.png" alt="Derek Wilson">
+                                                <span class="owner-status profile-owner-status on" ng-class="{on: connection.status=='on'}"></span>
+                                            </figure>
+                                            <a class="profile-name ng-binding">Derek Wilson</a>
+                                            <div class="profile-item ng-binding">Fisher College</div>
+                                            <div class="profile-item ng-binding">
+                                                Sophomore · 22y/o
+                                            </div>
+                                            <a class="icon-check"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <div class="form-group">
+                                                <p class="item-price ng-binding">$2014</p>
+                                                <p class="profile-item profile-info-item ng-binding">Since dec 2014</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="rating">
+                                                    <div class="ratings-container">
+                                                        <span class="ratings-wrapper">
+                                                            <span class="ratings" style="width:80%;"></span>
+                                                        </span>
+                                                        <span class="ratings-count">(4)</span>
+                                                    </div>
+                                                </div>
+                                                <p class="profile-item profile-info-item ng-binding">Last seen: 2 hours ago</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <ul class="connection-list">
+                                                    <li><figure><img src="images/users/user1.jpg"></figure></li>
+                                                    <li><figure><img src="images/users/user2.jpg"></figure></li>
+                                                    <li><figure><img src="images/users/user3.jpg"></figure></li>
+                                                    <li><figure><img src="images/users/user4.jpg"></figure></li>
+                                                    <li class="gray-color like-count">+34</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>    
+                        </div>
+                    </div><!-- End .chats-wrapper -->
+                    <footer>
+                        <form ng-submit="submit(new_message)">
+                            <div class="input-group">
+                                <input type="text" class="form-control font-5" ng-model="new_message" placeholder="Your message..." autofocus required>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-custom" type="submit"><strong>SEND</strong></button>
+                                </span>
+                            </div>
+                        </form>
+                    </footer>
+                </div><!-- End .chats-container -->
+            </div>  
+        </div><!-- End .container -->
+    </div><!-- End #content -->
+
+    <!--
+    <aside class="sidebar profile" role="complementary" ng-class="{'user-can-edit': currentMenu=='profile_edit'}" ng-hide="user_not_found">
+            <div class="sidebar-wrapper"
+                 ng-nicescroll
+                 nice-option="{zindex: 9999,
+                               autohidemode: true,
+                               background: '' ,
+                               cursorcolor: '#d7e0e1',
+                               cursorwidth: '5px',
+                               cursorborder: 'none',
+                               cursorborderradius: '4px'}">
+
+            <form name="profileForm" class="form">
+            <div class="widget widget-user widget-user-cus">
+                <div class="user">
+                    <figure>
+                        <img ng-src="{{user.picture }}" alt="User" width="100px" height="100px">
+                        <figcaption>
+                            <input type="file" class="fileupload" file-model="user_post_data.picture" onchange="angular.element(this).scope().save_profile()">
+                            <i class="icon-camera-white"></i>
+                        </figcaption>
+                    </figure>
+                    <div class="user-title edit-text">
+                        <div class="dropdown font-5 " ng-class="{ open:edit_field=='name' }">
+                            {{user.full_name||'User Name'}}
+
+                        </div>
+                    </div>
+
+                    <div class="user-meta edit-text">
+                        <div class="dropdown" ng-class="{ open:edit_field=='privacy' }">
+                            <div class="font-6 black-color">{{user.college||'college'}}</div>
+                            <div class="font-6 black-color">
+                                Sophomore
+                                <span class="dot-separator"></span><span class="gray-color">{{user.age }}y/o</span>
+                            </div>  
+                            <div class="price-wrapper">
+                                <p class="item-price ">$2014
+                                    <span class="font-6 gray-color regular">since dec 2014</span>
+                                </p>    
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown promote-dropdown" ng-class="{ open:edit_field=='promote'}">
+                    <a class="btn btn-custom3 btn-block user-promote-btn dropdown-toggle" ng-click="edit_profile('promote', $event)"><strong>PROMOTE YOUR PAGE</strong></a>
+                    <ul class="dropdown-menu" outside_click="close_edit()">
+                        <li><a href="#" ><span class="social-icon icon-facebook-color" title="Like us on Facebook">Facebook</span> Share on Facebook</a></li>
+                        <li><a href="#" ><span class="social-icon icon-twitter-color" title="Like us on Facebook">Twitter</span> Share on Twitter</a></li>
+                        <li><a href="#" ><span class="social-icon icon-instagram-color" title="Like us on Facebook">Instagram</span> Share on Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="line-separator"></div>
+            <div class="widget widget-social clearfix widget-social-cus">
+                <div class="desc-label edit-text">
+                    <div class="dropdown" ng-class="{ open:edit_field=='social' }">
+                        <a href="" id="edit-social" class="edit-icon dropdown-toggle" title="Edit" ng-click="edit_profile('social', $event)"></a>
+                        <div class="dropdown-menu" aria-labelledby="edit-social" outside_click="close_edit()">
+                            <div class="form-group">
+                                <span class="input-social input-twitter"></span>
+                                <input type="text" class="form-control" name="twitter" ng-model="user_post_data.social_links.twitter" placeholder="Twitter">
+                            </div>
+                            <div class="form-group">
+                                <span class="input-social input-instagram"></span>
+                                <input type="text" class="form-control" name="instagram" ng-model="user_post_data.social_links.instagram" placeholder="Instagram">
+                            </div>
+                            <div class="form-group">
+                                <span class="input-social input-facebook"></span>
+                                <input type="text" class="form-control" name="facebook" ng-model="user_post_data.social_links.facebook" placeholder="Facebook">
+                            </div>
+                            <div class="form-group">
+                                <span class="input-social input-googleplus"></span>
+                                <input type="text" class="form-control" name="googleplus" ng-model="user_post_data.social_links.googleplus" placeholder="Googleplus">
+                            </div>
+                            <button type="button" class="btn btn-custom3 btn-block" ng-click="save_profile();"><strong>SAVE</strong></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social-icons">
+                    <a href="#" class="social-icon icon-facebook social-icon1" title="Like us on Facebook">Facebook</a>
+                    <a href="#" class="social-icon icon-twitter social-icon1" title="Find us on Twitter">Twitter</a>
+                    <a href="#" class="social-icon icon-instagram social-icon1" title="Find us on Instagram">Instagram</a>
+                </div>
+            </div>
+            <div class="line-separator"></div>
+            <div class="widget widget-about description reasone">
+                <div class="desc edit-section dropdown" ng-class="{ open:edit_field=='description' }">You’ll hire me because...
+                    <a href="" id="edit-services" class="edit-icon dropdown-toggle" title="Edit" ng-click="edit_profile('description', $event)"></a>
+                    <div class="dropdown-menu" aria-labelledby="edit-services" outside_click="close_edit()">
+                        <div class="form-group" ng-repeat="desc in user_post_data.descriptions track by $index">
+                            <input type="text" class="form-control" name="description" ng-model="desc.description">
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-custom3 btn-block" ng-click="save_profile();"><strong>SAVE</strong></button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button type="submit" class="btn btn-custom4 btn-border btn-block" ng-click="add_more_description()">Add more</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reason-wrapper">
+                    <div class="reason-item" ng-repeat="item in reasonList">{{item.reason}}</div>       
+                </div>    
+                
+            </div>
+            <div class="widget about">
+                <div class="desc edit-section font-3 regular dropdown">More about me...
+                    <a href="" id="edit-services" class="edit-icon dropdown-toggle" title="Edit" ng-click="edit_profile('description', $event)"></a>
+                    <div class="dropdown-menu" aria-labelledby="edit-services" outside_click="close_edit()">
+                        <div class="form-group" ng-repeat="desc in user_post_data.descriptions track by $index">
+                            <input type="text" class="form-control" name="description" ng-model="desc.description">
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-custom3 btn-block" ng-click="save_profile();"><strong>SAVE</strong></button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button type="submit" class="btn btn-custom4 btn-border btn-block" ng-click="add_more_description()">Add more</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-wrapper font-5 gray-color">
+                    I’m a senior here at Harvard University and study bio-engineering. I love writing and reading. Contact me anytime if you need help.
+                </div>
+            </div>
+                <footer class="footer">
+                    <div class="footer-wrapper">
+                        <p class="say-hello">SAY HELLO</p>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon icon-facebook social-icon1" title="Like us on Facebook">Facebook</a>
+                            <a href="#" class="social-icon icon-twitter social-icon1" title="Find us on Twitter">Twitter</a>
+                            <a href="#" class="social-icon icon-instagram social-icon1" title="Find us on Instagram">Instagram</a>
+                        </div>
+                        <p class="copyright">© 2015 Uknack. All rights reserved</p>
+                    </div>
+                </footer>
+            </form>
+        </div>
+    </aside>
+    -->
+    <aside class="sidebar profile" role="complementary" ng-class="{'user-can-edit': currentMenu=='profile_edit'}" ng-hide="user_not_found">
+        <div class="sidebar-wrapper"
+             ng-nicescroll
+             nice-option="{zindex: 9999,
+                                   autohidemode: true,
+                                   background: '' ,
+                                   cursorcolor: '#d7e0e1',
+                                   cursorwidth: '5px',
+                                   cursorborder: 'none',
+                                   cursorborderradius: '4px'}">
+
+            <div class="widget widget-user">
+                <a class="edit-icon dropdown-toggle" title="Edit" ng-click="edit_profile('name', $event)"></a>
+                <div class="user">
+                    <img class="checked" src="images/checked.png" />
+                    <img class="camera" src="images/camera.png" />
+                    <figure>
+                        <img src="images/default-photo.png" alt="User" width="100px" height="100px">
+                        <figcaption>
+                            <input type="file" class="fileupload" file-model="user_post_data.picture" onchange="angular.element(this).scope().save_profile()">
+                            <i class="icon-camera-white"></i>
+                        </figcaption>
+                    </figure>
+                    <h3 class="user-title">Sarah Simson</h3>
+                    <p class="user-college">Boston University</p>
+                    <div class="dropdown" ng-class="{ open:edit_field=='name' }">
+                        <div class="dropdown-menu" aria-labelledby="edit-name" outside_click="close_edit()">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="full_name" ng-model="user_post_data.full_name" placeholder="Full Name">
+                            </div>
+                            <div class="form-group">
+                                <!--
+                                <select class="form-control">
+                                    <option value="">Boston University</option>
+                                    <option value="">Harvard University</option>
+                                </select>
+                                -->
+                                <div class="check-dropdown-box left-dropdown first-dropdown clearfix">
+                                    <div class="channel-title gray-color" ng-click="toggleCollegeBox()" ng-model="filter.college">
+                                        All Colleges
+                                    </div>
+                                    <div class="sidebar-wrapper channel-content"
+                                         ng-nicescroll
+                                         nice-option="{zindex: 9999,
+                                       autohidemode: true,
+                                       background: '' ,
+                                       cursorcolor: '#d7e0e1',
+                                       cursorwidth: '5px',
+                                       cursorborder: 'none',
+                                       cursorborderradius: '4px'}" ng-show="isCollegeBoxOpened">
+                                        <div ng-repeat="college in colleges">
+                                            <!--*****-->
+                                            <div class="checkbox channel-check" > <!---->
+                                                <label class="custom-checkbox-wrapper">
+                                                    <span class="custom-checkbox-container">
+                                                        <input type="checkbox" name="categories" checklist-model="filter.selected_categories" >
+                                                        <span class="custom-checkbox-icon"></span>
+                                                    </span>
+                                                    <span>{{ college.name }}</span>
+                                                </label>
+                                            </div><!-- End .checkbox -->
+                                        </div><!-- End .cat-col -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="check-dropdown-box left-dropdown first-dropdown clearfix">
+                                    <div class="channel-title gray-color" ng-click="toggleLocationBox()">
+                                        All Locations
+                                    </div>
+                                    <div class="sidebar-wrapper channel-content"
+                                         ng-nicescroll
+                                         nice-option="{zindex: 9999,
+                                       autohidemode: true,
+                                       background: '' ,
+                                       cursorcolor: '#d7e0e1',
+                                       cursorwidth: '5px',
+                                       cursorborder: 'none',
+                                       cursorborderradius: '4px'}" ng-show="isLocationBoxOpened">
+                                        <div ng-repeat="location in locations">
+                                            <!--*****-->
+                                            <div class="checkbox channel-check" > <!---->
+                                                <label class="custom-checkbox-wrapper">
+                                                    <span class="custom-checkbox-container">
+                                                        <input type="checkbox" name="categories" checklist-model="filter.selected_categories" >
+                                                        <span class="custom-checkbox-icon"></span>
+                                                    </span>
+                                                    <span>{{ location.name }}</span>
+                                                </label>
+                                            </div><!-- End .checkbox -->
+                                        </div><!-- End .cat-col -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="age" placeholder="age" value="22 years old">
+                            </div>
+                            <button type="button" class="btn btn-custom3 btn-block" ng-click="save_profile();"><strong>SAVE</strong></button>
+                        </div><!-- End .dropdown-menu -->
+                    </div><!-- End .dropdown -->
+                </div><!-- End .user -->
+            </div>
+
+
+
+            <div class="widget promote">
+                <div class="cost">
+                    <p>$8,214</p>
+                    Since Jan 2014
+                </div>
+                <div class="rating">
+                    <span>Senior &middot; 24y/o</span><br/>
+                    <div class="ratings-container">
+                            <span class="ratings-wrapper">
+                                <span class="ratings" style="width:80%;"></span>
+                            </span>
+                        <span class="ratings-count">(4)</span>
+                    </div>
+                    <br/>
+                    <span>Last seen: 3 days ago</span><br/>
+                </div>
+                <div class="dropdown promote-dropdown" ng-class="{ open:edit_field=='promote'}">
+                    <a class="btn btn-custom3 btn-block user-promote-btn dropdown-toggle" ng-click="edit_profile('promote', $event)"><strong>PROMOTE YOUR PAGE</strong></a>
+                    <ul class="dropdown-menu" outside_click="close_edit()">
+                        <li><a href="#" ><span class="social-icon icon-facebook-color" title="Like us on Facebook">Facebook</span> Share on Facebook</a></li>
+                        <li><a href="#" ><span class="social-icon icon-twitter-color" title="Like us on Facebook">Twitter</span> Share on Twitter</a></li>
+                        <li><a href="#" ><span class="social-icon icon-instagram-color" title="Like us on Facebook">Instagram</span> Share on Instagram</a></li>
+                    </ul>
+                </div><!-- End .dropdown -->
+            </div><!-- End .widget -->
+
+
+
+            <div class="widget social">
+                <div class="social-icons">
+                    <a href="#" class="social-icon icon-facebook-color" title="Like us on Facebook">Facebook</a>
+                    <a href="#" class="social-icon icon-twitter-color" title="Find us on Twitter">Twitter</a>
+                    <a href="#" class="social-icon icon-instagram-color" title="Find us on Instagram">instagram</a>
+                </div><!-- End .social-icons -->
+                <a href="" id="edit-social" class="edit-icon dropdown-toggle" title="Edit" ng-click="edit_profile('social', $event)"></a>
+                <div class="dropdown" ng-class="{ open:edit_field=='social' }">
+                    <div class="dropdown-menu" aria-labelledby="edit-social" outside_click="close_edit()">
+                        <div class="form-group">
+                            <span class="input-social input-twitter"></span>
+                            <input type="text" class="form-control" name="twitter" ng-model="user_post_data.social_links.twitter" placeholder="https://twitter.com/automn2015">
+                        </div><!-- End .form-group -->
+                        <div class="form-group">
+                            <span class="input-social input-instagram"></span>
+                            <input type="text" class="form-control" name="instagram" ng-model="user_post_data.social_links.instagram" placeholder="www.instagram.com/yourname">
+                        </div><!-- End .form-group -->
+                        <div class="form-group">
+                            <span class="input-social input-facebook"></span>
+                            <input type="text" class="form-control" name="facebook" ng-model="user_post_data.social_links.facebook" placeholder="www.facebook.com/yourname">
+                        </div><!-- End .form-group -->
+                        <!--
+                        <div class="form-group">
+                            <span class="input-social input-googleplus"></span>
+                            <input type="text" class="form-control" name="googleplus" ng-model="user_post_data.social_links.googleplus" placeholder="Googleplus">
+                        </div><!-- End .form-group -->
+                        <button type="button" class="btn btn-custom3 btn-block" ng-click="save_profile();"><strong>SAVE</strong></button>
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .dropdown -->
+            </div><!-- End .widget -->
+
+
+
+            <div class="widget hire-me">
+                <a href="" id="edit-services" class="edit-icon dropdown-toggle" title="Edit" ng-click="edit_profile('description', $event)"></a>
+                <div class="desc edit-section dropdown" ng-class="{ open:edit_field=='description' }">You’ll hire me because...
+                    <div class="dropdown-menu" aria-labelledby="edit-services" outside_click="close_edit()">
+                        <div class="form-group hire-me-edit-box" ng-repeat="desc in user_post_data.descriptions track by $index">
+                            <input type="text" class="form-control" name="description" ng-model="desc.description" ng-focus="edit_hire_me_inx = $index" ng-blur="edit_hire_me_inx = -1">
+                            <a class="btn-close"><img src="images/sprites-images/close.png" ng-show="edit_hire_me_inx == $index" /></a>
+                        </div><!-- End .form-group -->
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-custom3 btn-block" ng-click="save_profile();"><strong>SAVE</strong></button>
+                            </div><!-- End .col-xs-6 -->
+                            <div class="col-xs-6">
+                                <button type="submit" class="btn btn-custom4 btn-border btn-block" ng-click="add_more_description()">Add more</button>
+                            </div><!-- End .col-xs-6 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .dropdown -->
+                <!--
+                <div class="hire-me-box" ng-repeat="desc in user.descriptions">{{ desc.description }}</div><!-- End .about-box -->
+
+                <div class="hire-me-box" ng-repeat="desc in user_post_data.descriptions track by $index">{{desc.description}}</div>
+
+            </div><!-- End .widget -->
+
+
+
+            <div class="widget about">
+                <a href="" id="edit-services" class="edit-icon dropdown-toggle" title="Edit" ng-click="edit_profile('about', $event)"></a>
+                <div class="desc edit-section dropdown" ng-class="{ open:edit_field=='about' }">More about me...
+                    <div class="dropdown-menu" aria-labelledby="edit-services" outside_click="close_edit()">
+                        <div class="form-group">
+                            <textarea class="form-control">I’m a senior here at Emerson University and study communications. I love writing, reading, photography and Math. Contact me anytime if you need help.</textarea>
+                        </div><!-- End .form-group -->
+                        <button type="button" class="btn btn-custom3 btn-block" ng-click="save_profile();"><strong>SAVE</strong></button>
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .dropdown -->
+                <p class="more-about-text right-col">I’m a senior here at Emerson University and study communications. I love writing, reading, photography and Math. Contact me anytime if you need help.</p>
+            </div><!-- End .widget -->
+
+
+
+            <div class="widget payment-method">
+                <a href="" id="edit-services" class="edit-icon dropdown-toggle" title="Edit" ng-click="edit_profile('payment-method', $event)"></a>
+                <div class="desc edit-section dropdown" ng-class="{ open:edit_field=='payment-method' }">My payment method
+                    <div class="dropdown-menu" aria-labelledby="edit-services" outside_click="close_edit()">
+                        <p>Enter your payment method to get paid directly</p>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <img src="images/sprites-images/venmo.png" class="venmo-img" />
+                                </div>
+                                <div class="col-xs-7">
+                                    <input type="text" class="form-control" name="Venmo" placeholder="venmo.com/username">
+                                </div>
+                            </div>
+                        </div><!-- End .form-group -->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <img src="images/sprites-images/paypal.png" class="paypal-img" />
+                                </div>
+                                <div class="col-xs-7">
+                                    <input type="text" class="form-control" name="Paypal" placeholder="paypal.com/username">
+                                </div>
+                            </div>
+                        </div><!-- End .form-group -->
+                        <button type="button" class="btn btn-custom3 btn-block" ng-click="save_profile();"><strong>SAVE</strong></button>
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .dropdown -->
+            </div><!-- End .widget -->
+
+
+
+            <div class="widget uknack-url">
+                <a href="" id="edit-services" class="edit-icon dropdown-toggle" title="Edit" ng-click="edit_profile('uknack-url', $event)"></a>
+                <div class="desc edit-section dropdown" ng-class="{ open:edit_field=='uknack-url' }">My Uknack URL
+                    <div class="dropdown-menu" aria-labelledby="edit-services" outside_click="close_edit()">
+                        <p>Promote your page with your Uknack URL</p>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="Uknack URL" placeholder="www.uknack.com/username">
+                        </div><!-- End .form-group -->
+                        <button type="button" class="btn btn-custom3 btn-block" ng-click="save_profile();"><strong>SAVE</strong></button>
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .dropdown -->
+            </div><!-- End .widget -->
+
+
+
+            <footer class="footer">
+                <div class="footer-wrapper">
+                    <!--<ul class="footer-menu clearfix">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Privacy</a></li>
+                </ul>-->
+                    <p class="say-hello">SAY HELLO</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon icon-facebook social-icon1" title="Like us on Facebook">Facebook</a>
+                        <a href="#" class="social-icon icon-twitter social-icon1" title="Find us on Twitter">Twitter</a>
+                        <a href="#" class="social-icon icon-instagram social-icon1" title="Find us on Instagram">Instagram</a>
+                    </div><!-- End .social-icons -->
+                    <p class="copyright">&copy; 2015 Uknack. All rights reserved</p>
+                </div>
+            </footer>
+        </div><!-- End .sidebar-wrapper -->
+
+    </aside>
+    <!--
+    <div class="sidebarbg-mobile"></div><!-- end .sidebarbg-mobile -->

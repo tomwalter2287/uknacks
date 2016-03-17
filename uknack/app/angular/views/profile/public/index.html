@@ -1,0 +1,481 @@
+<div id="content" role="main" class="profile">
+    <div class="container special-container" ng-show="user_not_found">
+        <br><br>
+        <h1>User Not Found</h1>
+    </div>
+    <div class="container special-container" ng-hide="user_not_found">
+        <div class="row special-row">
+            <div class="col-content">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" ng-class="{active:active_tab=='knacks'}">
+                        <a href="" aria-controls="profile-knacks" ng-click="activate_knacks()">
+                            Knacks ({{ knacks.length }})</a>  <!-- {{ knacks.length }} -->
+                    </li>
+                    <li role="presentation" ng-class="{active:active_tab=='items'}">
+                        <a href="" aria-controls="profile-items" ng-click="activate_items()">
+                            STORE ({{ items.length }})</a>   <!-- {{ items.length }} -->
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+
+                    <div role="tabpanel" class="tab-pane" id="profile-knacks" ng-class="{active:active_tab=='knacks'}">
+                        <article class="no-item clearfix" ng-show="knacks.length==0">
+                            <p></p>
+                            <img src="images/welcome-logo.png" />
+                            <p class="message">{{ user_post_data.first_name }} hasn't created any knacks yet.</p>
+                        </article>
+                        <article class="item clearfix" ng-show="knacks.length>0" ng-repeat="item in knacks">
+                            <div class="item-header">
+                                <a href="#" title="{{item.name}}">
+                                    <img ng-src="{{item.photo0}}" class="profile-page-item-img">
+                                </a>
+                                <span class="item-price font-1-normal">${{item.price}}</span>
+                                <div class="item-fav">
+                                    <span class="fav-count fav-count-large">0</span>
+                                    <a href="#" class="icon-fav" title="Add to Favourite">Add to Favourite"></a>
+                                </div>
+                            </div>
+                            <div class="item-content profile-item-content">
+                                <h2 class="item-title">
+                                    <a href="#">{{item.name}}</a>
+                                </h2>
+                                <p>{{item.description}}</p>
+                                <div class="item-meta">
+                                    <div class="ratings-container">
+                                        <div class="ratings-wrapper">
+                                            <div class="ratings" style="width:80%;"></div><!-- End .ratings -->
+                                        </div>
+                                        <span class="ratings-count">(4)</span>
+                                    </div>
+                                    <span class="dot-separator"></span>
+                                    <div class="item-category">
+                                        <a href="#" title="Photography">{{item.category_name}}</a>
+                                    </div>
+                                </div>
+                                <div class="line-separator"></div>
+                                <div class="item-action-wrapper clearfix">
+                                    <div class="pull-left">
+                                        <div class="meta-item-footer">
+                                            <a class="status-item gray-color ng-binding">
+                                                <i class="fa fa-star-o"></i>
+                                                659
+                                            </a>
+                                            <a class="status-item gray-color ng-binding" ng-click="toggleSubFeed($index)">
+                                                <i class="fa fa-comment-o"></i>
+                                                3
+                                            </a>
+                                            
+                                            <a class="status-item gray-color ng-binding" ng-click="toggleSocialBox($index, $event)">
+                                                <i class="fa fa-share-alt" ></i>
+                                                22
+                                            </a>
+                                            <div class="dropdown profile-social-dropdown" ng-class="{ open: openIndex==$index }" outside-click="closeSocialBox()">
+                                                <ul class="dropdown-menu" >
+                                                    <li><a href="" ><span class="social-icon icon-facebook-color" title="Like us on Facebook">Facebook</span> Share on Facebook</a></li>
+                                                    <li><a href="" ><span class="social-icon icon-twitter-color" title="Like us on Facebook">Twitter</span> Share on Twitter</a></li>
+                                                    <li><a href="" ><span class="social-icon icon-instagram-color" title="Like us on Facebook">Instagram</span> Share on Instagram</a></li>
+                                                </ul>
+                                            </div><!-- End .dropdown -->
+                                        </div>
+
+                                    </div><!-- End .item-owner -->
+                                    <div class="pull-right">
+                                        <a href="" class="btn btn-custom4 btn-border" ng-click="openWriteAReviewModal(item.buy_item, 'knack')">Write a review</a>
+                                        <a href="" class="btn btn-custom dropdown-toggle" ng-click="openHireModal()"><strong>Hire Me</strong></a>
+                                        
+                                    </div><!-- End .item-action -->
+                                </div><!-- End .item-action-wrapper -->
+                            </div><!-- End .item-content -->
+                        </article>
+                    </div><!-- End .tab-pane -->
+                   
+                    <div role="tabpanel" class="tab-pane" id="profile-items" ng-class="{active:active_tab=='items'}">
+                        <article class="no-item clearfix" ng-show="items.length==0">
+                            <p></p>
+                            <img src="images/welcome-logo.png" />
+                            <p class="message">{{ user_post_data.first_name }} hasn't posted any item yet.</p>
+                        </article>
+                        <article class="item clearfix" ng-show="items.length>0" ng-repeat="item in items">
+                            <div class="item-header">
+                                <a href="" title="{{item.name}}">
+                                    <img ng-src="{{item.photo0}}" alt="{{item.name}}" class="profile-page-item-img">
+                                </a>
+                                <span class="item-price font-1-normal">${{item.price}}</span>
+                                <div class="item-fav">
+                                    <span class="fav-count fav-count-large">0</span>
+                                    <a href="" class="icon-fav" title="Add to Favourite">Add to Favourite"></a>
+                                </div><!-- End .item-fav -->
+                            </div><!-- End .item-header -->
+                            <div class="item-content profile-item-content">
+                                <h2 class="item-title">
+                                    <a href="">{{item.name}}</a>
+                                </h2>
+                                <p>{{item.description}}</p>
+                                <div class="item-meta">
+                                    <div class="ratings-container">
+                                        <div class="ratings-wrapper">
+                                            <div class="ratings" style="width:80%;"></div><!-- End .ratings -->
+                                        </div><!-- End .ratings-wrapper -->
+                                        <span class="ratings-count">{{item.fav_count}}</span>
+                                    </div><!-- End .ratings-container -->
+                                    <span class="dot-separator"></span>
+                                    <div class="item-category">
+                                        <a href="" title="">{{item.category_name}}</a>
+                                    </div><!-- End .item-tags -->
+                                </div><!-- End .item-meta -->
+                                <div class="line-separator"></div>
+                                <div class="item-action-wrapper clearfix" outside-click="closeSocialBox()">
+                                    <div class="pull-left">
+                                        <div class="meta-item-footer">
+                                        <a class="status-item gray-color ng-binding">
+                                            <i class="fa fa-star-o"></i>
+                                            659
+                                        </a>
+                                        <a class="status-item gray-color ng-binding" ng-click="toggleSubFeed($index)">
+                                            <i class="fa fa-comment-o"></i>
+                                            3
+                                        </a>
+                                        <a class="status-item gray-color ng-binding">
+                                            <i class="fa fa-share-alt" ng-click="toggleSocialBoxInStore($index, $event)"></i>
+                                            22
+                                        </a>
+                                        <div class="dropdown profile-social-dropdown" ng-class="{ open: openIndexInStore==$index }">
+                                            <ul class="dropdown-menu" >
+                                                <li><a href="" ><span class="social-icon icon-facebook-color" title="Like us on Facebook">Facebook</span> Share on Facebook</a></li>
+                                                <li><a href="" ><span class="social-icon icon-twitter-color" title="Like us on Facebook">Twitter</span> Share on Twitter</a></li>
+                                                <li><a href="" ><span class="social-icon icon-instagram-color" title="Like us on Facebook">Instagram</span> Share on Instagram</a></li>
+                                            </ul>
+                                        </div><!-- End .dropdown -->
+                                    </div>
+                                    </div><!-- End .item-owner -->
+                                    <div class="pull-right">
+                                        <a href="" class="btn btn-custom4 btn-border" ng-click="openWriteAReviewModal(item.buy_item, 'item')">Write a review</a>
+                                        <a href="" class="btn btn-custom dropdown-toggle" ng-click="openByItemModal()"><strong>Buy Item</strong></a>
+                                        <div class="dropdown promote-dropdown" ng-class="{ open: openIndex==$index }">
+                                            <ul class="dropdown-menu" outside_click="close_edit()">
+                                                <li><a href="#" ><span class="social-icon icon-facebook-color" title="Like us on Facebook">Facebook</span> Share on Facebook</a></li>
+                                                <li><a href="#" ><span class="social-icon icon-twitter-color" title="Like us on Facebook">Twitter</span> Share on Twitter</a></li>
+                                                <li><a href="#" ><span class="social-icon icon-instagram-color" title="Like us on Facebook">Instagram</span> Share on Instagram</a></li>
+                                            </ul>
+                                        </div><!-- End .dropdown -->
+                                    </div><!-- End .item-action -->
+                                </div>
+                            </div><!-- End .item-content -->
+                        </article>
+                        
+                    </div><!-- End .tab-pane -->
+                </div><!-- End .tab-content -->
+            </div><!-- End .col-content -->
+            <div class="col-side">
+                <ul class="nav nav-tabs no-margin" role="tablist">
+                    <li role="presentation" class="tab-pane lowercase active" ng-class="{active:active_r_tab=='connections'}">
+                        <a href="" ng-click="activate_connections()">Connections</a>
+                    </li>
+                    <li role="presentation" class="tab-pane lowercase" ng-class="{active:active_r_tab=='reviews'}">
+                        <a href="" ng-click="activate_reviews()">Reviews</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" ng-class="{active:active_r_tab=='connections'}">
+                        <div class="connections-box welcome-profile">
+                            <div class="search-box">
+                                <input type="text" placeholder="Search classmate name..." id="search-text-input" />
+                                <a id="button-holder">
+                                    <img src="images/search_btn.png" />
+                                </a>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <div class="nono-msg">
+                                NO CONNECTIONS YET
+                            </div>
+                            <p class="tip-msg">Connecting is simple</p>
+
+                            <div class="notice-box">
+                                <div>
+                                    <div class="numberCircle">1</div><div class="notice-msg">Browse Knacks or Items</div><div style="clear: both;"></div>
+                                </div>
+                                <div>
+                                    <div class="numberCircle">2</div>
+                                    <div class="notice-msg">Flip someone's profile</div>
+                                    <img class="right contact-state-icon" src="images/sprites-images/refresh-green-icon.png">
+                                    <div style="clear: both;"></div>
+                                </div>
+                                <div>
+                                    <div class="numberCircle">3</div>
+                                    <div class="notice-msg">Check the connection</div>
+                                    <img class="right contact-state-icon" src="images/sprites-images/check-green.png">
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </div>
+                            <div class="alter-msg">
+                                <p>{{ user_post_data.first_name }}'s Connections<br>will show here</p>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div><!-- End .tab-pane -->
+                    <div role="tabpanel" class="tab-pane" ng-class="{active:active_r_tab=='reviews'}">
+                        <div class="connections-box welcome-profile">
+                            <div class="search-box">
+                                <input type="text" placeholder="Search classmate name..." id="search-text-input" />
+                                <a id="button-holder">
+                                    <img src="images/search_btn.png" />
+                                </a>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <div class="nono-msg">
+                                NO REVIEWS YET
+                            </div>
+                            <p class="tip-msg">Getting a review is simple</p>
+
+                            <div class="notice-box">
+                                <div>
+                                    <div class="numberCircle">1</div><div class="notice-msg">Post a Knacks or an Item</div><div style="clear: both;"></div>
+                                </div>
+                                <div>
+                                    <div class="numberCircle">2</div>
+                                    <div class="notice-msg">Do good business</div>
+                                    <!--
+                                    <img class="right contact-state-icon" src="images/sprites-images/refresh-green-icon.png">
+                                    -->
+                                    <div style="clear: both;"></div>
+                                </div>
+                                <div>
+                                    <div class="numberCircle">3</div>
+                                    <div class="notice-msg">Get a review</div>
+                                    <!--
+                                    <img class="right contact-state-icon" src="images/sprites-images/check-green.png">
+                                    -->
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </div>
+                            <div class="alter-msg">
+                                <p>{{ user_post_data.first_name }}'s reviews<br>will appear here</p>
+                                <p></p>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="reviews-box">
+                            <h3>Reviews <a href="#" class="pull-right">Show all(5)</a></h3>
+                            <div class="review-overall">
+                                <p>Overal Rating</p>
+                                <div class="ratings-container">
+                                    <span class="ratings-count"><strong>4.2</strong> / 5.0</span>
+                                    <div class="ratings-wrapper">
+                                        <div class="ratings" style="width:80%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="review">
+                                <div class="review-content">
+                                    Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum'.
+                                </div>
+                                <div class="review-wrapper clearfix">
+                                    <div class="item-owner">
+                                        <figure>
+                                            <img src="images/users/user1.jpg" alt="Derek Wilson">
+                                        </figure>
+                                        <div class="owner-meta">
+                                            <h4><a href="#">Derek Wilson</a></h4>
+                                            <span>Fisher college</span>
+                                        </div>
+                                    </div>
+                                    <div class="rating-single">
+                                        <i class="icon-rating-single"></i>
+                                        <span class="ratings-count">4</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="review">
+                                <div class="review-content">
+                                    Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum'.
+                                </div>
+                                <div class="review-wrapper clearfix">
+                                    <div class="item-owner">
+                                        <figure>
+                                            <img src="images/users/user6.jpg" alt="James Poter">
+                                        </figure>
+                                        <div class="owner-meta">
+                                            <h4><a href="#">James Poter</a></h4>
+                                            <span>Harvard University</span>
+                                        </div>
+                                    </div>
+                                    <div class="rating-single">
+                                        <i class="icon-rating-single"></i>
+                                        <span class="ratings-count">5</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <footer>
+                                <a href="#" title="Write a Review" data-toggle="modal" data-target="#review-modal">WRITE A REVIEW</a>
+                            </footer>
+                        </div>
+                        -->
+                    </div><!-- End .tab-pane -->
+                </div>
+
+
+            </div><!-- End .col-side -->
+        </div><!-- End .special-row -->
+    </div><!-- End .container -->
+    <footer class="footer">
+        <div class="container">
+            <!--<ul class="footer-menu clearfix">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Feedback</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Privacy</a></li>
+            </ul>-->
+            <p class="say-hello">SAY HELLO</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon icon-facebook social-icon1" title="Like us on Facebook">Facebook</a>
+                <a href="#" class="social-icon icon-twitter social-icon1" title="Find us on Twitter">Twitter</a>
+                <a href="#" class="social-icon icon-instagram social-icon1" title="Find us on Instagram">Instagram</a>
+            </div><!-- End .social-icons -->
+            <p class="copyright">&copy; 2015 Uknack. All rights reserved</p>
+        </div><!-- End .container -->
+    </footer>
+</div><!-- End #content -->
+
+<aside class="sidebar profile public-profile" role="complementary" ng-class="{'user-can-edit': currentMenu=='profile_edit'}" ng-hide="user_not_found">
+    <div class="sidebar-wrapper"
+         ng-nicescroll
+         nice-option="{zindex: 9999,
+                              autohidemode: true,
+                              background: '' ,
+                              cursorcolor: '#d7e0e1',
+                              cursorwidth: '5px',
+                              cursorborder: 'none',
+                              cursorborderradius: '4px'}">
+        <form name="profileForm" class="form">
+            <div class="widget widget-user">
+                <div class="user">
+                    <a href="" class="checked"><img src="images/checked.png" /></a>
+                    <figure>
+
+                        <img ng-src="{{ user_post_data.picture || 'images/users/no_avatar.png'}}" title="{{ user_post_data.full_name }}" alt="User" width="100px" height="100px">
+                        <figcaption>
+                            <input type="file" class="fileupload" file-model="user_post_data.picture">
+                            <i class="icon-camera-white"></i>
+                        </figcaption>
+                    </figure>
+                    <h3 class="user-title" ng-show="user_post_data.full_name==''">Name</h3>
+                    <h3 class="user-title" ng-show="user_post_data.full_name!=''">{{ user_post_data.full_name }}</h3>
+                    <p class="user-college" ng-show="user_post_data.college==null">University</p>
+                    <p class="user-college" ng-show="user_post_data.college!=null">{{ user_post_data.college }}</p>
+                </div><!-- End .user -->
+            </div>
+        </form>
+        <form name="promoteForm" class="form">
+            <div class="widget promote">
+                <div class="cost">
+                    <p>$0</p>
+                    Since {{user_post_data.created_date}}
+                </div>
+                <div class="rating">
+                    <span>{{user_post_data.year}}<span ng-show="user_post_data.age!=null">&middot; {{user_post_data.age}}y/o</span></span><br/>
+                    <div class="ratings-container">
+                            <span class="ratings-wrapper">
+                                <span class="ratings" style="width:0%;"></span>
+                            </span>
+                        <span class="ratings-count">(0)</span>
+                    </div>
+                    <br/>
+                    <span>Last seen: {{user_post_data.last_seen1}}</span><br/>
+                </div>
+                <div class="dropdown promote-dropdown" ng-class="{ open:edit_field=='promote'}">
+                    <a class="btn btn-custom btn-block user-promote-btn dropdown-toggle" ng-click="contactMe()"><strong>CONTACT ME</strong></a>
+                    <ul class="dropdown-menu" outside_click="close_edit()">
+                        <li><a href="{{user_post_data.social_links.facebook}}" ><span class="social-icon icon-facebook-color" title="Like us on Facebook">Facebook</span> Share on Facebook</a></li>
+                        <li><a href="{{user_post_data.social_links.twitter}}" ><span class="social-icon icon-twitter-color" title="Like us on Twitter">Twitter</span> Share on Twitter</a></li>
+                        <li><a href="{{user_post_data.social_links.instagram}}" ><span class="social-icon icon-instagram-color" title="Like us on Instagram">Instagram</span> Share on Instagram</a></li>
+                    </ul>
+                </div><!-- End .dropdown -->
+            </div><!-- End .widget -->
+        </form>
+
+        <form name="socialForm" class="form">
+            <div class="widget social">
+                <div class="social-icons">
+                    <a href="{{user_post_data.social_links.facebook}}" class="social-icon icon-facebook-color" title="Like us on Facebook">Facebook</a>
+                    <a href="{{user_post_data.social_links.twitter}}" class="social-icon icon-twitter-color" title="Find us on Twitter">Twitter</a>
+                    <a href="{{user_post_data.social_links.instagram}}" class="social-icon icon-instagram-color" title="Find us on Instagram">instagram</a>
+                </div><!-- End .social-icons -->
+                <div class="dropdown" ng-class="{ open:edit_field=='social' }">
+                    <div class="dropdown-menu" aria-labelledby="edit-social" outside_click="close_edit()">
+                        <div class="form-group">
+                            <span class="input-social input-twitter"></span>
+                            <input type="text" class="form-control" name="twitter" ng-blur="twitter_focus_out()" ng-focus="twitter_focus_in()" ng-model="user_post_data.social_links.twitter" placeholder="twitter.com/yourname">
+                        </div><!-- End .form-group -->
+                        <div class="form-group">
+                            <span class="input-social input-instagram"></span>
+                            <input type="text" class="form-control" name="instagram" ng-blur="instagram_focus_out()" ng-focus="instagram_focus_in()" ng-model="user_post_data.social_links.instagram" placeholder="www.instagram.com/yourname">
+                        </div><!-- End .form-group -->
+                        <div class="form-group">
+                            <span class="input-social input-facebook"></span>
+                            <input type="text" class="form-control" name="facebook" ng-blur="facebook_focus_out()" ng-focus="facebook_focus_in()" ng-model="user_post_data.social_links.facebook" placeholder="www.facebook.com/yourname">
+                        </div><!-- End .form-group -->
+                        <!--
+                        <div class="form-group">
+                            <span class="input-social input-googleplus"></span>
+                            <input type="text" class="form-control" name="googleplus" ng-model="user_post_data.social_links.googleplus" placeholder="Googleplus">
+                        </div><!-- End .form-group -->
+                        <button type="button" class="btn btn-custom3 btn-block" ng-click="save_social();"><strong>SAVE</strong></button>
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .dropdown -->
+            </div><!-- End .widget -->
+        </form>
+
+        <form name="reasonForm" class="form">
+            <div class="widget hire-me">
+                <div class="font-4 font-bold edit-title" >You'll hire me because
+                </div><!-- End .dropdown -->
+                <div class="reason-wrapper">
+                    <div class="reason-item" ng-repeat="reason in user_post_data.reasons track by $index">{{user_post_data.reasons[$index]}}</div>
+                </div>
+            </div><!-- End .widget -->
+        </form>
+
+        <form name="aboutForm" class="form">
+            <div class="widget about">
+                <div class="desc edit-section dropdown" ng-class="{ open:edit_field=='about' }">More about me...
+                    <div class="dropdown-menu" aria-labelledby="edit-services" outside_click="close_edit()">
+                        <div class="form-group">
+                            <textarea class="form-control" ng-model="user_post_data.about_me"></textarea>
+                        </div><!-- End .form-group -->
+                        <button type="button" class="btn btn-custom3 btn-block" ng-click="save_about();"><strong>SAVE</strong></button>
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .dropdown -->
+                <p class="more-about-text right-col">{{user_post_data.about_me}}</p>
+            </div><!-- End .widget -->
+        </form>
+
+        <footer class="footer">
+            <div class="footer-wrapper">
+                <!--<ul class="footer-menu clearfix">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Feedback</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Privacy</a></li>
+            </ul>-->
+                <p class="say-hello">SAY HELLO</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon icon-facebook social-icon1" title="Like us on Facebook">Facebook</a>
+                    <a href="#" class="social-icon icon-twitter social-icon1" title="Find us on Twitter">Twitter</a>
+                    <a href="#" class="social-icon icon-instagram social-icon1" title="Find us on Instagram">Instagram</a>
+                </div><!-- End .social-icons -->
+                <p class="copyright">&copy; 2015 Uknack. All rights reserved</p>
+            </div>
+        </footer>
+    </div><!-- End .sidebar-wrapper -->
+
+</aside>
+<!--
+<div class="sidebarbg-mobile"></div><!-- end .sidebarbg-mobile -->

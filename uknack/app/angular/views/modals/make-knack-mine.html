@@ -1,0 +1,122 @@
+<form class="form" name="postForm">
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" title="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="modallabel">MAKE THIS KNACK MINE</h4>
+</div><!-- End .modal-header -->
+<div class="modal-body">
+    <div class="form-group">
+        <label for="knack-subject" class="input-desc">KNACK HEADLINE</label>
+        <input type="text" class="form-control input-lg" id="knack-subject" ng-model="knack.name" placeholder="e.g. I'll help you write an excellent thesis for your paper" select_on_click required>
+        <!--
+        <span class="error" ng-show="knack.name.$error.required">Required!</span>
+        -->
+    </div><!-- End .from-group -->
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+                <label class="input-desc">KNACK CATEGORY</label>
+                <div class="dropdown-box-container">
+                    <div class="dropdown-box" ng-init="isCategoriesBoxOpened=false; categoriesBoxTitle='Category selection'" ng-class="{'open': isCategoriesBoxOpened == true}" outside-click="isCategoriesBoxOpened=false">
+                        <div class="dropdown-box-title" ng-click="isCategoriesBoxOpened = !isCategoriesBoxOpened">
+                            {{categoriesBoxTitle}}
+                        </div>
+                        <div class="dropdown-box-content">
+                            <div ng-repeat="category in knackCategories">
+                                <span ng-click="$parent.categoriesBoxTitle=category.name; $parent.knack.category=category.id; $parent.isCategoriesBoxOpened = !$parent.isCategoriesBoxOpened">{{category.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="knack-message" class="input-desc">TELL US ABOUT WHAT YOU DO</label>
+        <div class="textarea-wrapper">
+            <textarea name="#" id="knack-message" cols="30" rows="2" class="form-control" ng-model="knack.description" select_on_click></textarea>
+            <figure class="textarea-icon first">
+                <i class="icon-camera"></i>
+                <input type="file" file-model="knack.photo" class="fileupload">
+            </figure>
+            <!--
+            <a href="#" class="textarea-icon last" title="Video">
+                <i class="icon-video-camera"></i>
+            </a>
+            -->
+        </div><!-- End .textarea-wrapper -->
+    </div><!-- End .from-group -->
+
+    <div class="form-group">
+        <label for="knack-message" class="input-desc">UPLOAD UP TO FIVE IMAGES</label>
+        <div class="upload-image"></div>
+        <div class="upload-image"></div>
+        <div class="upload-image"></div>
+        <div class="upload-image"></div>
+        <div class="upload-image"></div>
+    </div><!-- End .from-group -->
+
+    <div class="form-group">
+        <label for="knack-schedule" class="input-desc">WHAT'S YOUR SCHEDULE LIKE?</label>
+        <input type="input" id="knack-schedule" ng-model="knack.schedule" class="form-control input-lg" placeholder="e.g. I have class in the morning so anytime after 2pm is good">
+    </div><!-- End .from-group -->
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+                <label for="knack-schedule" class="input-desc">ARE YOU WILLING TO TRAVEL?</label>
+                <div class="radio-button">
+                    <input id="willing-yes" type="radio" name="willing" value="yes">
+                    <label for="willing-yes"><span></span>YES</label>
+                    <input id="willing-no" type="radio" name="willing" value="no">
+                    <label for="willing-no"><span></span>NO</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+                <label for="knack-schedule" class="input-desc">HOW MANY MILES</label>
+                <div class="dropdown-box-container">
+                    <div class="dropdown-box" ng-init="isMilesBoxOpened=false;milesTitle='5 miles';" ng-click="isMilesBoxOpened = !isMilesBoxOpened" ng-class="{'open': isMilesBoxOpened == true}" outside-click="isMilesBoxOpened=false">
+                        <div class="dropdown-box-title">{{milesTitle}}</div>
+                        <div class="dropdown-box-content">
+                            <div ng-click="milesTitle='5 miles'"><span>5 miles</span></div>
+                            <div ng-click="milesTitle='10 miles'"><span>10 miles</span></div>
+                            <div ng-click="milesTitle='20 miles'"><span>20 miles</span></div>
+                            <div ng-click="milesTitle='50+ miles'"><span>50+ miles</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+                <label for="knack-price" class="input-desc">WHAT IS YOUR RATE?</label>
+                <input type="number" class="form-control input-lg" id="knack-price" ng-model="knack.price" required>
+            </div>
+        </div><!-- End .col-xs-6 -->
+        <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+                <label for="knack-price" class="input-desc">HOW DO YOU CHARGE?</label>
+                <div class="dropdown-box-container">
+                    <div class="dropdown-box" ng-init="isFeeBoxOpened=false;feeTitle='Flat Fee';" ng-click="isFeeBoxOpened = !isFeeBoxOpened" ng-class="{'open': isFeeBoxOpened == true}" outside-click="isFeeBoxOpened=false">
+                        <div class="dropdown-box-title">{{feeTitle}}</div>
+                        <div class="dropdown-box-content">
+                            <div ng-click="feeTitle='Flat Fee'"><span>Flat Fee</span></div>
+                            <div ng-click="feeTitle='Hourly'"><span>Hourly</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End .col-xs-6 -->
+    </div><!-- End .row -->
+
+</div><!-- End .modal-body -->
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-custom btn-block" ng-click="save_knack()"><strong>POST YOUR KNACK</strong><i class="icon-plus"></i></button>
+</div><!-- End .modal-footer -->
+</form>
